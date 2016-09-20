@@ -1,0 +1,206 @@
+@font-face {
+  font-family: 'condensed';
+  font-style: normal;
+  font-weight: 0;
+  src: url('../fonts/lexipacondensed.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'expanded';
+  font-style: normal;
+  font-weight: 0;
+  src: url('../fonts/lexipaexpanded.ttf') format('truetype');
+}
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+.picture-enter {
+  opacity: 0.01;
+}
+
+.picture-enter.picture-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.picture-leave {
+  opacity: 1;
+}
+
+.picture-leave.picture-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+
+.picture-appear {
+  opacity: 0.01;
+}
+
+.picture-appear.picture-appear-active {
+  opacity: 1;
+  transition: opacity 1s ease-in;
+}
+
+#picture {
+  border: 2px solid #333;
+  width: 450px;
+  height: 250px;
+  position: absolute;
+  left: 323px;
+  top: 45px;
+  margin-left: -225px;
+  background-image: url('../img/computer.png');
+}
+
+.text-holder {
+  text-align: left;
+  width: 552px;
+  position: absolute;
+  left: 47px;
+  top: 330px;
+}
+
+
+#actions {
+  margin-top: .75em;
+  text-align: center;
+}
+
+#actions ul {
+  width: 100%;
+  text-align: left;
+}
+
+#actions ul li {
+  float: left;
+  text-align:center;
+}
+
+.action-2 {
+  width: 276px;
+}
+
+.action-3 {
+  width: 184px;
+}
+
+.action-4 {
+  width: 138px;
+}
+
+#holder {
+  text-align: center;
+}
+
+ul, li {
+  text-decoration: none;
+  display: inline-block;
+  padding: 0;
+}
+
+
+body, * {
+  margin: 0;
+  font-family: 'expanded';
+  font-size: 32px;
+  background-color: #FFF;
+  color: #333;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+}
+
+#actions li a {
+  font-family: 'expanded';
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.current a:before {
+ content: ">";
+ width: 20px;
+ position: absolute;
+ left: -20px;
+ text-align: left;
+}
+
+#app, #content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+
+.shake {
+  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes shake-long {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%, 50%, 70% {
+    transform: translate3d(-3px, 0, 0);
+  }
+  40%, 60% {
+    transform: translate3d(3px, 0, 0);
+  }
+}
+
+@keyframes shake {
+  14%, 98% {
+    transform: translate3d(-1px, 0, 0);
+  }  
+  28%, 84% {
+    transform: translate3d(2px, 0, 0);
+  }
+  42%, 70% {
+    transform: translate3d(-3px, 0, 0);
+  }
+  56% {
+    transform: translate3d(3px, 0, 0);
+  }
+}
+
+*:focus {
+  outline: none
+}
+
+
+/* 14 -1
+   28  2
+   42 -3
+   56  3
+   70 -3
+   84  2
+   98 -1
+   
+*/
+
+
+/* 
+return of ganon - too big 
+pixerif - a little ornate but nice size (nah too big)
+rainyhearts - way too girly
+alagard - good for accents? too big and too ornate
+apple - good size but too wide (maybe too big actually)
+babyblue - way too big :(
+coderscrux - no
+graphicpixel - PERFECT size (20)
+dos - good if graphicpixel turns out to be too big (16)
+LEXIPA - not sure what size this is supposed to be but works well at decent szes (also pretty)
+nano - a biiiit big @ 20 but looks good
+
+*/
