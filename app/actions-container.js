@@ -9,7 +9,7 @@ const mapStateToProps = (state, ownProps) => {
     currentAction: state.currentAction,
     
   }
-}
+} 
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {

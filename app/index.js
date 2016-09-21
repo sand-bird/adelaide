@@ -8,7 +8,7 @@ import * as actions from './actions'
 
 var defaultState = {
   msg: {
-    text: "This is a redux test message. Making it really long so it will go on multiple lines hooray. Here is another line for fun",
+    text: "This is a redux test message. Making it really \nlong so it will go on multiple lines hooray. \nHere is another line for fun",
     id: "test1",
     next: "test2"
   },
@@ -39,7 +39,8 @@ var defaultState = {
   currentText: '',
   typing: false,
   typeQueue: [],
-  textSpeed: 40
+  textSpeed: 30,
+  textWidth: 50
 }
 
 var store = createStore(reducers, defaultState)

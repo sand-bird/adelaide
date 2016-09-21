@@ -1,6 +1,23 @@
 import * as actions from './actions'
 import {messages, pictures, actns} from './src/game'
 
+const newLineify = (string, interval) => {
+  let lines = []
+  // our starting index
+  let i = 0
+  // distance of space from i
+  let j = 0
+  while (i + interval < string.length) {
+    j = string.slice(i, i + interval).lastIndexOf(" ")
+    console.log("j: " + j)
+    lines.push (string.slice(i, i + j))
+    i += j
+    console.log("i: " + i + "    j: " + j)
+  }
+  lines.push(string.slice(i, string.length))
+  return (lines.join("\n"))
+}
+
 const reducers = (state, action) => {
   switch (action.type) {
 
@@ -11,6 +28,9 @@ const reducers = (state, action) => {
         var newMsg = messages.find( 
           msg => { return msg.id === action.object.msg } 
         )
+        
+        newMsg.text = newLineify(newMsg.text, state.textWidth)
+
         newState.msg = newMsg
         newState.currentText = ''
         newState.typeQueue = []
@@ -48,13 +68,7 @@ const reducers = (state, action) => {
       return newState
       
     case 'NEXT_MESSAGE':
-      var newMsg = messages.find( function(msg) { return msg.id === state.msg.next } )
-      
-      var newState = Object.assign({}, state, {msg: newMsg})
-      newState.currentText = ''
-      newState.typeQueue = []
-
-      return newState
+      return reducers(state, actions.loadItems({msg: state.msg.next}))
       
     case 'LOAD_SAVE':
       var newState = Object.assign({}, state)
