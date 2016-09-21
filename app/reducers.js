@@ -12,6 +12,8 @@ const reducers = (state, action) => {
           msg => { return msg.id === action.object.msg } 
         )
         newState.msg = newMsg
+        newState.currentText = ''
+        newState.typeQueue = []
       }
       if (action.object.actns) {
         var newActns = []
@@ -49,6 +51,8 @@ const reducers = (state, action) => {
       var newMsg = messages.find( function(msg) { return msg.id === state.msg.next } )
       
       var newState = Object.assign({}, state, {msg: newMsg})
+      newState.currentText = ''
+      newState.typeQueue = []
 
       return newState
       
@@ -85,7 +89,9 @@ const reducers = (state, action) => {
           newState.currentAction = state.currentAction + 1
       }
       else if (key == "Enter" || key == 'z' || key == ' ') {
-        if (newState.msg.next !== null)
+        if (newState.typing)
+          return reducers(newState, actions.completeType())
+        else if (newState.msg.next !== null)
           return reducers(newState, actions.nextMessage())
         else if (newState.actions.length > 0 && newState.currentAction >= 0 )
           return reducers(newState, actions.invokeAction())
@@ -130,6 +136,34 @@ const reducers = (state, action) => {
       
       if (newState) return newState
       else return state
+      
+    case 'TYPE':
+      var newState = Object.assign({}, state)
+      
+      newState.currentText += action.char
+      newState.typing = action.more
+      
+      return newState
+      
+    case 'COMPLETE_TYPE':
+      for (let i = 0; i < state.typeQueue.length; i++) {
+        clearTimeout(state.typeQueue[i])
+      }
+      
+      var newState = Object.assign({}, state)
+       
+      newState.currentText = newState.msg.text
+      newState.typeQueue = [] 
+      newState.typing = false
+       
+      return newState 
+      
+    case 'SET_TYPE_QUEUE':
+      var newState = Object.assign({}, state)
+      
+      newState.typeQueue = action.queue
+      
+      return newState
  
     default:
       return state

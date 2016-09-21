@@ -6,7 +6,8 @@ const mapStateToProps = (state, ownProps) => {
     text: state.msg.text,
     picture: state.picture.file,
     lastKey: state.lastKey,
-    hasNext: state.msg.next !== null
+    showActions: state.msg.next == null && !state.typing,
+    textSpeed: state.textSpeed
   }
 }
 

@@ -1,13 +1,14 @@
 {
   "name": "adelaide",
   "version": "1.0.0",
-  "description": "game",
+  "description": "is a game",
   "main": "main.js",
   "scripts": {
     "start": "electron main.js",
     "watch": "watchify app/index.js -t babelify -o public/js/bundle.js --debug --verbose"
   },
   "author": "sand-bird",
+  "repository": "https://github.com/sand-bird/adelaide",
   "license": "ISC",
   "dependencies": {
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -23,7 +24,8 @@
     "react-measure": "^0.5.0",
     "react-redux": "^4.4.5",
     "react-sound": "^0.5.2",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "velocity-react": "^1.1.5"
   },
   "babel": {
     "plugins": [

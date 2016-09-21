@@ -7,10 +7,7 @@ const mapStateToProps = (state, ownProps) => {
     lastKey: state.lastKey,
     actions: state.actions,
     currentAction: state.currentAction,
-    handleMeasure: (index, d) => {
-      console.log('measurements for ' + index)
-      console.log(d.width)
-    }
+    
   }
 }
 

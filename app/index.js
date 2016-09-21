@@ -8,7 +8,7 @@ import * as actions from './actions'
 
 var defaultState = {
   msg: {
-    text: "This is a redux test message",
+    text: "This is a redux test message. Making it really long so it will go on multiple lines hooray. Here is another line for fun",
     id: "test1",
     next: "test2"
   },
@@ -35,7 +35,11 @@ var defaultState = {
   save: '',
   screen: 'GAME',
   currentAction: -1,
-  lastCurrentAction: -1
+  lastCurrentAction: -1,
+  currentText: '',
+  typing: false,
+  typeQueue: [],
+  textSpeed: 40
 }
 
 var store = createStore(reducers, defaultState)

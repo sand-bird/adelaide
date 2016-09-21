@@ -42,3 +42,26 @@ export const invokeAction = () => {
     type: 'INVOKE_ACTION'
   }
 }
+export const type = (char, more) => {
+  return {
+    type: 'TYPE',
+    char: char,
+    more: more
+  }
+}
+export const wipe = () => {
+  return {
+    type: 'WIPE'
+  }
+}
+export const completeType = () => {
+  return {
+    type: 'COMPLETE_TYPE'
+  }
+}
+export const setTypeQueue = (queue) => {
+  return {
+    type: 'SET_TYPE_QUEUE',
+    queue: queue
+  }
+}

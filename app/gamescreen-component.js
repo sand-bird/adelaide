@@ -1,18 +1,17 @@
 import React from 'react'
 import PictureComponent from './picture-component'
-import TextBoxComponent from './textbox-component'
+import TextBoxContainer from './textbox-container'
 import ActionsContainer from './actions-container'
+import {VelocityTransitionGroup} from 'velocity-react'
 
-import Typewriter from './typewriter'
-
-const GameScreenComponent = ({text, picture, lastKey, hasNext}) => {
-  return (
+const GameScreenComponent = ({text, picture, lastKey, showActions, textSpeed}) => {
+  return ( 
     <div id="game">
       < PictureComponent picture={picture} />
       <div className="text-holder">
-        <TextBoxComponent text={text} />
-        { hasNext ? '' : <ActionsContainer/> }
+        <TextBoxContainer text={text} speed={textSpeed} />
       </div>
+        {showActions ? <ActionsContainer/> : undefined }
     </div>
   )
 }

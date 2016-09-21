@@ -16,7 +16,8 @@ function createWindow () {
     icon:'public/img/logo.png',
     resizable: false,
     titleBarStyle: 'hidden',
-    autoHideMenuBar: true
+    autoHideMenuBar: true,
+    useContentSize: true
   }
   
   mainWindow = new BrowserWindow(browserOptions)

@@ -1,14 +1,21 @@
 import React from 'react'
 import Measure from 'react-measure'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 const ActionsComponent = (
     {actions, handleMouseOver, handleMouseOut, handleMeasure, currentAction, lastKey}) => {
-  let height
-  let width  
-  
+   
   return (
     <div id="actions">
       <ul>
+        <ReactCSSTransitionGroup 
+          transitionName="action" 
+          transitionAppearTimeout={1000} 
+          transitionEnterTimeout={250}
+          transitionLeaveTimeout={0} 
+          transitionLeave={false}
+          transitionAppear={true}
+        >
         {actions.map ((action, index, actions) =>
           <Action 
             name={action.name}
@@ -16,27 +23,26 @@ const ActionsComponent = (
             onMouseOver={ () => handleMouseOver(index) }
             onMouseOut={ () => handleMouseOut() }
             onMeasure={ (d) => handleMeasure(index, d) }
-            enable={action.show}
-            key={index}
+            key={action.id} 
             className={"action-" + actions.length}
           />
         )}
-      </ul>
+    </ReactCSSTransitionGroup >
+      </ul> 
     </div>
   )
 }
 
 
-const Action = (
+const Action = ( 
     {name, isCurrent, className, enable, onMouseOver, onMouseOut, onMeasure}) => {
   
   return (
+  
     <li className={className + (isCurrent ? ' current' : '')}>
-      <Measure
-        onMeasure={(d) => onMeasure(d) }
-      >
+
         <a href="#" onMouseOver={onMouseOver} onMouseOut={onMouseOut}>{name}</a>
-      </Measure>
+
     </li>
   )
 }
