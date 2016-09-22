@@ -5,15 +5,25 @@ import {filterActions} from '../utils'
 
 const mapStateToProps = (state, ownProps) => {
   
-  const actions = filterActions (
-    ownProps.actions ? ownProps.actions : state.actions, state.save
-  )
+  const hasPages = state.actionPageIndex >= 0 
+    && Array.isArray(state.actions[state.actionPageIndex])
+  
+  const actions = 
+    ownProps.actions ? filterActions (ownProps.actions, state.save) : 
+    hasPages ? state.actions[state.actionPageIndex] : 
+    state.actions
+  
+  console.log(state.actionPageIndex)
+  console.log(state.actions)
+  console.log(actions)
   
   return {
     lastKey: state.lastKey,
     actions: actions,
     currentAction: state.currentAction,
-    title: state.screen.toLowerCase()
+    title: state.screen.toLowerCase(),
+    hasPrev: state.actionPageIndex > 0,
+    hasNext: hasPages && state.actionPageIndex < state.actions.length - 1
   }
 } 
 

@@ -16,6 +16,7 @@ var defaultState = {
   lastCurrentAction: 0,
   currentText: '',
   textArrayIndex: -1,
+  actionPageIndex: -1,
   typing: false,
   typeQueue: [],
   lastKey: '',
@@ -31,7 +32,8 @@ var defaultState = {
   settings: {
     textSpeed: 30,
     textWidth: 48,
-    textLines: 4
+    textLines: 4,
+    actionsPerPage: 3
   }
 };
 

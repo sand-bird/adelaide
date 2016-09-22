@@ -1,7 +1,15 @@
+const actionTypes = [
+  'function', // calls a function with eval(). for crazy shit only
+  'loadItems', // passes value as param to dispatch.loadItems
+  'setState', // passes value as param to reducers.generateState
+  'dispatch', // pass string to call that dispatch with no params, else pass hash with type: type
+  'relay' // calls dispatch.invokeAction on the action id specified
+]
+
 export const defaultSave = {
-  msg: '',
-  pic: '',
-  actns: [],
+  msg: 'abcd',
+  pic: 'bedroom',
+  actns: ['actn1', 'actn2', 'actn3', 'actn4', 'actn5', 'actn6', 'actn7'],
   flags: []
 }
 
@@ -17,7 +25,7 @@ export const messages = [
     next: null
   },
   {
-    text: "Action start!!!!!! !!!!!!!! !!!!!!!!!!!!! !!!!!!!!! !!!!!!!!!!!!!!!!!!",
+    text: "Let's test action pages yeahH!!!",
     id: "abcd",
     next: null
   }
@@ -42,6 +50,62 @@ export const actns = [
   {
     id: "yeah",
     name: "LET'S DO THIS",  
+    scripts: [{
+      type: "loadItems",
+      value: ''
+    }]
+  },
+  {
+    id: "actn1",
+    name: "TEST",  
+    scripts: [{
+      type: "loadItems",
+      value: ''
+    }]
+  },
+  {
+    id: "actn2",
+    name: "LONGTEXT",  
+    scripts: [{
+      type: "loadItems",
+      value: ''
+    }]
+  },
+  {
+    id: "actn3",
+    name: "MEDIUMTEXT",  
+    scripts: [{
+      type: "loadItems",
+      value: ''
+    }]
+  },
+  {
+    id: "actn4",
+    name: "HAS SPACE",  
+    scripts: [{
+      type: "loadItems",
+      value: ''
+    }]
+  },
+  {
+    id: "actn5",
+    name: "FIVE",  
+    scripts: [{
+      type: "loadItems",
+      value: ''
+    }]
+  },
+  {
+    id: "actn6",
+    name: "SIX",  
+    scripts: [{
+      type: "loadItems",
+      value: ''
+    }]
+  },
+  {
+    id: "actn7",
+    name: "SEVEN",  
     scripts: [{
       type: "loadItems",
       value: ''
@@ -82,11 +146,11 @@ export const titleActions = [
     name: "NEW GAME",
     scripts: [
       {
-        type: "action",
+        type: "dispatch",
         value: "NEW_SAVE"
       },
       {
-        type: "action",
+        type: "dispatch",
         value: "LOAD_GAME"
       }
     ]
@@ -95,7 +159,7 @@ export const titleActions = [
     id: "load_game",
     name: "LOAD GAME",
     scripts: [{
-      type: "action",
+      type: "dispatch",
       value: "LOAD_GAME"
     }],
     show: ['hasSave']

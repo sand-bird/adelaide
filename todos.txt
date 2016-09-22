@@ -1,0 +1,8 @@
+* options menu
+* save to file on quit (workaround for force close: save to localState, then check localState against file)
+* pagifyActions
+* keep settings in localstate
+* text animations (speed up, slow down, force continue, force type)
+* sprites
+* picture load properly
+* title > game fade animation

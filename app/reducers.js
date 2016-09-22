@@ -1,6 +1,6 @@
 import * as actions from './actions'
 import * as game from './src/game'
-import {newLineify, newMessageify, filterActions} from './utils'
+import {newLineify, newMessageify, filterActions, pagifyActions} from './utils'
 
 const reducers = (state, action) => {
 
@@ -19,14 +19,24 @@ const reducers = (state, action) => {
     return state
   }
   
-  
   let activeActions = 
-    state.screen == 'GAME' ? filterActions(state.actions, state.save) :
+    state.screen == 'GAME' ? state.actions :
     state.screen == 'MENU' ? filterActions(game.menuActions, state.save) :
     state.screen == 'TITLE' ? filterActions(game.titleActions, state.save) :
     state.screen == 'OPTIONS' ? filterActions(game.optionsActions, state.save) : []
+  
+  let actnsHasPages = state.actionPageIndex >= 0 
+    && Array.isArray(state.actions[state.actionPageIndex])
     
-  let msgHasMore = Array.isArray(state.msg.text) && state.textArrayIndex < state.msg.text.length - 1
+  let actnsHasPrev = actnsHasPages && state.actionPageIndex > 0
+  let actnsHasNext = actnsHasPages
+    && state.actionPageIndex < state.actions.length - 1
+  
+  let msgHasMore = Array.isArray(state.msg.text) 
+    && state.textArrayIndex < state.msg.text.length - 1
+    
+  let noCurrAction = state.currentAction < 0 
+    || state.currentAction >= activeActions.length
     
   /* ~~~~~~~~~~~~~~~~ *
    *  REDUCER PROPER  *
@@ -53,9 +63,7 @@ const reducers = (state, action) => {
               newMsg.text, state.settings.textWidth
             ), state.settings.textLines
           )
-        
-        console.log(newMsg.text)
-
+          
         newState.msg = newMsg
         newState.currentText = ''
         newState.textArrayIndex = 0
@@ -78,13 +86,16 @@ const reducers = (state, action) => {
         }
         else {
           newState.lastActions = []
-          newState.lastCurrentAction = -1
+          newState.lastCurrentAction = 0
         }
-        newState.currentAction = 
-          state.lastCurrentAction >= 0 ? state.lastCurrentAction :
-          // autoselect single actions wooo
-          newActns.length == 1 ? 0 : 0
-        newState.actions = newActns
+        newState.currentAction = state.lastCurrentAction
+        newState.actionPageIndex = 0
+        newState.actions = 
+          pagifyActions(
+            filterActions(
+              newActns, state.save
+            ), state.settings.actionsPerPage
+          )
       }
       if (action.object.pic) {   
         var newPic = game.pictures.find( 
@@ -111,10 +122,10 @@ const reducers = (state, action) => {
       return generateState({save: action.save})
       
     case 'NEW_SAVE':
-      // TODO: make sure this loads a default state
-      return state
-    
+      return generateState({save: game.defaultSave})
+     
     case 'LOAD_GAME':
+      console.log("loading game")
       return generateState(
         reducers(state, actions.loadItems(state.save)),
         {screen: 'GAME'}
@@ -130,17 +141,29 @@ const reducers = (state, action) => {
       switch(action.key) {
  
         case "ArrowLeft":
-          if (state.currentAction < 0 || state.currentAction >= activeActions.length)
+          if (noCurrAction)
             newState.currentAction = activeActions.length - 1
-          else if (state.currentAction != 0) 
+          else if (state.currentAction > 0)
             newState.currentAction = state.currentAction - 1
+          else if (actnsHasPrev) {
+            newState.actionPageIndex = state.actionPageIndex - 1
+            newState.currentAction = 
+              // get the last index of prev page
+              // (really this should always be equal to
+              // settings.actionsPerPage but it doesn't hurt)
+              state.actions[newState.actionPageIndex].length - 1
+          }
           return newState
 
         case "ArrowRight":
-          if (state.currentAction < 0 || state.currentAction >= activeActions.length)
+          if (noCurrAction)
             newState.currentAction = 0
-          else if (state.currentAction != activeActions.length - 1) 
+          else if (state.currentAction < activeActions.length - 1) 
             newState.currentAction = state.currentAction + 1
+          else if (actnsHasNext) {
+            newState.actionPageIndex = state.actionPageIndex + 1
+            newState.currentAction = 0
+          }
           return newState
         
         case "Enter":
@@ -204,7 +227,7 @@ const reducers = (state, action) => {
             newState = generateState(source.value)
             break
             
-          case 'action':
+          case 'dispatch':
             if (typeof(source.value) === 'string')
               // shorthand for argumentless actions is just the type string
               newState = reducers(currentState, {type: source.value})

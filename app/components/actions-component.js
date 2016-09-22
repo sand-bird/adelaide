@@ -2,32 +2,35 @@ import React from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 const ActionsComponent = (
-    {actions, title, handleMouseOver, handleMouseOut, currentAction}) => {
+    {actions, title, handleMouseOver, handleMouseOut, currentAction, hasNext, hasPrev}) => {
    
   return (
-    <div id={title + "-actions"} className="actions">
-      <ul>
-        <ReactCSSTransitionGroup 
-          transitionName="action" 
-          transitionAppearTimeout={1000} 
-          transitionEnterTimeout={250}
-          transitionLeaveTimeout={0} 
-          transitionLeave={false}
-          transitionAppear={true}
-        >
-        {actions.map ((action, index, actions) =>
-          <Action 
-            name={action.name}
-            isCurrent={currentAction === index}
-            onMouseOver={ () => handleMouseOver(index) }
-            onMouseOut={ () => handleMouseOut() }
-            key={action.id} 
-            className={"action-" + actions.length}
-          />
-        )}
+    <ReactCSSTransitionGroup 
+      transitionName="action" 
+      transitionAppearTimeout={1000} 
+      transitionEnterTimeout={250}
+      transitionLeaveTimeout={0} 
+      transitionLeave={false}
+      transitionAppear={true}
+    >
+      <div id={title + "-actions"} className="actions">
+        {hasPrev ? <span className="prev-actions">{'<'}</span> : undefined}
+        <ul>
+          {actions.map ((action, index, actions) =>
+            <Action 
+              name={action.name}
+              isCurrent={currentAction === index}
+              onMouseOver={ () => handleMouseOver(index) }
+              onMouseOut={ () => handleMouseOut() }
+              key={action.id} 
+              className={"action-" + actions.length}
+            />
+          )}
+      
+        </ul> 
+        {hasNext ? <span className="next-actions">{'>'}</span> : undefined}
+      </div>
     </ReactCSSTransitionGroup >
-      </ul> 
-    </div>
   )
 }
 

@@ -6,9 +6,9 @@ const mapStateToProps = (state, ownProps) => {
   var thisText = Array.isArray(state.msg.text) ?
     state.msg.text[state.textArrayIndex] : state.msg.text
     
-    var msgHasMore = Array.isArray(state.msg.text) &&
-      state.textArrayIndex < state.msg.text.length - 1
-    
+  var msgHasMore = Array.isArray(state.msg.text) &&
+    state.textArrayIndex < state.msg.text.length - 1
+  
   return {
     text: thisText,
     picture: state.picture.file,

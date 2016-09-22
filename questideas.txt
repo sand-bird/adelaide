@@ -1,4 +1,4 @@
-katrina from animal crossing
+﻿katrina from animal crossing
 catherine
 yume nikki
 junji ito sleeper comic
@@ -214,45 +214,7 @@ GO OUT: change LOCATION : TOWN
 
 
 
-a LOCATION populates the picture window with a picture. it also populates the text box with default text?
-
-
-
-an ACTION is a menu option at the bottom of the screen. what can ACTIONS do?
-change LOCATION
-summon an ACTIONSET
-special things
-
-
 let's not keep examine and interact as default options
-
-
-
-CONTROLLER
-state: game state
-events: tell picture and textbox what to display
-
-PICTURE
-state: picture
-events: transition?
-
-TEXTBOX
-state: text
-events: none
-
-ACTIONS
-state: 
-  actions array
-events: 
-  select action
-  click action
-  
-
-
-load message (message)
-load actionset (actionset)
-load picture (picture)
-animate action (action)
 
 
 
@@ -265,24 +227,28 @@ TITLE SCREEN
 loadSave
 
 NEW GAME
-  newSave
-  loadGame
+newSave
+loadGame
   
 LOAD GAME
-  loadGame
+loadGame
   
 OPTIONS
-  load options menu somehow
+load options menu somehow
+(needs a prevMenu setting so we know if we're coming to it from title or menu --
+either that or a separate switch besides state.screen (but that's silly))
 
 
 MENU SCREEN
 ----------
 
 RESUME
-  toggleMenu
+toggleMenu
+
 OPTIONS
-  gotoOptions
+gotoOptions
+
 QUIT
-  quitGame  
+quitGame  
 
 

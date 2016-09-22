@@ -51,6 +51,41 @@ export const newMessageify = (string, lines) => {
   else return string
 }
 
+// JUNST IN CASE 
+export const fancyFlatten = (array) => {
+  let newArray = []
+  array.forEach( item => {
+    Array.isArray(array) ? 
+    newArray = newArray.concat(item) :
+    newArray.push(item)
+  })
+  return newArray
+}
+
+export const pagifyActions = (actions, pageSize) => {
+  // we don't trust old pagify jobs. let's start from scratch
+  if (Array.isArray(actions[0]))
+    actions = fancyFlatten(actions)
+  
+  if (actions.length > pageSize) {
+    let newActions = []
+    let currPage = []
+    let n = pageSize
+    
+    actions.forEach((action, index) => {
+      n--
+      currPage.push(action)
+      if (!n || index == actions.length - 1) {
+        newActions.push(currPage)
+        currPage = []
+        n = pageSize
+      }
+    })
+    return newActions
+  }
+  else return actions
+}
+
 export const showAction = (action, save) => {
   let show = true
   
@@ -71,6 +106,9 @@ export const showAction = (action, save) => {
   return show
 }
 
+// TODO: handle actionPages
+// (this should be called before pagifyActions,
+// but just in case)
 export const filterActions = (actions, save) => {
   return actions.filter(action => { return showAction(action, save) })
 }

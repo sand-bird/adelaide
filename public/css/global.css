@@ -30,6 +30,16 @@ body {
   box-sizing: border-box;
 }
 
+.prev-actions {
+  position: absolute;
+  left: -30px;
+}
+
+.next-actions {
+  position: absolute;
+  right: -30px;
+}
+
 .picture-enter {
   opacity: 0.01;
 }
@@ -110,9 +120,23 @@ p {
 
 #game-actions {
   position: absolute;
-  width: 552px;
+  width: 528px;
   left: 47px;
   top: 440px; 
+  text-align: center;
+}
+
+.action-1 {
+  max-width: 100%;
+}
+.action-2 {
+  max-width: 264px;
+}
+.action-3 {
+  max-width: 176px;
+}
+.action-4 {
+  max-width: 132px;
 }
 
 #title-actions {
@@ -134,6 +158,8 @@ p {
   text-align: left;
   height: 28px;
   overflow: hidden;
+  text-align: center;
+  width: auto;
 }
 
 #menu-actions ul {
@@ -141,8 +167,12 @@ p {
 }
 
 #game-actions ul li {
-  float: left;
+  display: inline-block;
+  background-color: #0f0;
+  border: 1px solid #F0F;
   text-align:center;
+  padding: 0px 30px;
+  white-space: nowrap;
 }
 
 #menu-actions ul li {
@@ -159,22 +189,6 @@ p {
 
 #title-actions ul li span {
   font-size: 32px;
-}
-
-.action-1 {
-  width: 100%;
-}
-
-.action-2 {
-  width: 276px;
-}
-
-.action-3 {
-  width: 184px;
-}
-
-.action-4 {
-  width: 138px;
 }
 
 #holder {
@@ -195,7 +209,7 @@ ul, li {
 }
 
 .current span:before {
- content: ">";
+ content: "#";
  width: 20px;
  position: absolute;
  left: -20px;
