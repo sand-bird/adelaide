@@ -3,51 +3,43 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import reducers from './reducers'
-import AppContainer from './app-container'
-import * as actions from './actions'
+import AppContainer from './components/app-container'
+
+console.log(localStorage)
 
 var defaultState = {
-  msg: {
-    text: "This is a redux test message. Making it really \nlong so it will go on multiple lines hooray. \nHere is another line for fun",
-    id: "test1",
-    next: "test2"
-  },
-  picture: {
-    file: "./public/images/bedroom.png",
-    id: "bedroom"
-  },
-  actions: [
-    {
-      name: "EXIT",
-      id: "bed_exit",
-      script: {msg: 'lazy', actns: ['test_sit', 'test_stand']},
-      show: true
-    },
-    {
-      name: "EXAMINE",
-      id: "bed_examine",
-      script: {actns: ['ex_bed_bed', 'ex_bed_computer', 'ex_bed_altar'], back: true},
-      show: true
-    }
-  ],
+  msg: {},
+  picture: {},
+  actions: [],
   lastActions: [],
-  lastKey: '',
-  save: '',
-  screen: 'GAME',
   currentAction: -1,
   lastCurrentAction: -1,
   currentText: '',
+  textArrayIndex: -1,
   typing: false,
   typeQueue: [],
-  textSpeed: 30,
-  textWidth: 50
-}
+  lastKey: '',
+  screen: 'TITLE',
+
+  save: {
+    msg: 'first',
+    pic: 'bedroom',
+    actns: ['yeah'],
+    flags: []
+  },
+
+  settings: {
+    textSpeed: 30,
+    textWidth: 48,
+    textLines: 4
+  }
+};
 
 var store = createStore(reducers, defaultState)
 
 render (
   <Provider store={store}>
-    <AppContainer store={store} />
+    <AppContainer />
   </Provider>,
   document.getElementById("content")
 )

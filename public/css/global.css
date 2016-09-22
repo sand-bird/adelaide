@@ -11,6 +11,21 @@
   src: url('../fonts/lexipaexpanded.ttf') format('truetype');
 }
 
+
+body, * {
+  margin: 0;
+  font-family: 'expanded';
+  font-size: 32px;
+  background-color: #FFF;
+  color: #333;
+  cursor: default
+}
+
+body {
+  width: 100%;
+  height: 100%;
+}
+
 *, *:before, *:after {
   box-sizing: border-box;
 }
@@ -60,6 +75,7 @@
   transition: opacity 500ms ease-in;
 }
 
+
 #picture {
   border: 2px solid #333;
   width: 454px;
@@ -69,6 +85,14 @@
   top: 45px;
   margin-left: -225px;
   background-image: url('../img/computer.png');
+}
+
+.game-title {
+  font-size: 128px;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 150px;
 }
 
 .text-holder {
@@ -84,21 +108,61 @@ p {
 }
  
 
-#actions {
+#game-actions {
   position: absolute;
   width: 552px;
   left: 47px;
-  top: 440px;
+  top: 440px; 
 }
 
-#actions ul {
+#title-actions {
+  position: absolute;
+  width: 552px;
+  left: 47px;
+  top: 280px; 
+}
+
+#menu-actions {
+  position: absolute;
+  width: 200px;
+  left: 313px;
+  top: 60px;
+}
+
+#game-actions ul {
   width: 100%;
   text-align: left;
+  height: 28px;
+  overflow: hidden;
 }
 
-#actions ul li {
+#menu-actions ul {
+  text-align: center;
+}
+
+#game-actions ul li {
   float: left;
   text-align:center;
+}
+
+#menu-actions ul li {
+  float: left;
+  text-align: center;
+  height: 40px;
+}
+
+#title-actions ul li {
+  float: left;
+  text-align: center;
+  height: 40px;
+}
+
+#title-actions ul li span {
+  font-size: 32px;
+}
+
+.action-1 {
+  width: 100%;
 }
 
 .action-2 {
@@ -123,29 +187,14 @@ ul, li {
   padding: 0;
 }
 
-
-body, * {
-  margin: 0;
-  font-family: 'expanded';
-  font-size: 32px;
-  background-color: #FFF;
-  color: #333;
-  box-sizing: border-box;
-}
-
-body {
-  width: 100%;
-  height: 100%;
-}
-
-#actions li a {
+.actions li span {
   font-family: 'expanded';
   position: relative;
   text-decoration: none;
   text-transform: uppercase;
 }
 
-.current a:before {
+.current span:before {
  content: ">";
  width: 20px;
  position: absolute;
@@ -161,6 +210,18 @@ body {
   bottom: 0;
 }
 
+::selection {
+  background: #fff;
+}
+
+.more {
+  position: absolute;
+  right: 12px;
+  bottom: 6px;
+  animation: blink 2s infinite ;
+  delay-animation: 1s;
+  opacity: 0;
+}
 
 .shake {
   animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
@@ -196,6 +257,15 @@ body {
   }
   56% {
     transform: translate3d(3px, 0, 0);
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 0
+  }
+  50% {
+    opacity: 1
   }
 }
 

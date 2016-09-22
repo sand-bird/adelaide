@@ -3,10 +3,19 @@
 const electron = require('electron')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
+const path = require('path')
+const fs = require('fs')
 
 require('electron-reload')(__dirname+'/public')
 
+var p = path.join(__dirname, '/', 'game.config')
+fs.writeFileSync(p, "abcds")
+
 let mainWindow
+
+global.sharedObject = {
+  someProperty: 'default value'
+}
 
 function createWindow () {
   const browserOptions = {
@@ -29,6 +38,7 @@ function createWindow () {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+  
 }
 
 app.on('ready', createWindow)

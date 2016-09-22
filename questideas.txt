@@ -1,0 +1,288 @@
+katrina from animal crossing
+catherine
+yume nikki
+junji ito sleeper comic
+that one tumblr about the dreamverse
+magician's quest mysterious times
+world of warcraft emerald dream lore
+chronicles of narnia
+the short story about demons under the bed
+night terrors / sleep paralysis hallucinations
+lucid dreams
+the astral plane
+wizard stores
+new age books
+instrumentality
+dream bits in bloodborne
+sphere
+ponch manifested realities in young wizards
+that dream about the waking and sleeping selves
+magicant
+out of this world
+baten kaitos battle system?
+
+
+being alone in a strange place
+objective reality vs subjective/dream reality
+flexible/malleable reality
+subjective consciousness, subjective world
+reality/plane phasing
+subconscious manifestation
+
+
+
+- new age shit is real - what is possible?
+  * triggering lucid dreams
+  * exploring astral plane
+  * out of body adventures (real life and astral plane)
+  * potions
+  * spells
+  * spirit guides
+  * demons, angels, ghosts
+
+is heaven real?
+
+options:
+- you are an exorcist
+- you are a teen witch
+- you are a hikkikomori -- hikki witch? magykk messageboards etc
+
+
+
+you live alone? what happened to your parents ( don't know don't care - like yume nikki )
+
+
+
+
+
+
+
+
+
+
+Five Faces of the Feminal Divine — Femella, Potens, Creatrix, Sapientia, and Antiqua
+hermetics?
+alchemy
+sigils
+familiar / spiritual guardian
+solar rituals for personal growth, Jupiter rituals for personal mastery and dominion and Venus rituals for self-love
+
+
+
+
+
+
+
+
+tarot card combat - draw from hand, combo-based using numbers
+eg. multiple of a number, sunrise, sunset - within sets and with multiple sets (poker-like)
+major cards have special rules
+
+
+lay formations face up?
+
+what do suits mean?
+- elemental damage/resist types
+- different actions (attack/heal/defend)
+
+
+SAMPLE ABILITIES
+- count for any number in combo
+- double damage
+- convert all cards to x element
+
+
+
+water  air
+earth  fire
+
+
+earth < air 
+  v      ^
+water > fire
+
+
+ace - all cards in combo are of this type (can only be one per combo)
+jack - 
+
+
+
+  
+  XX                      XX
+  XX  XX              XX  XX
+      XX  XX      XX  XX
+          XX  XX  XX
+              XX
+           
+           
+          XX
+          XX
+          
+      XX  XX  XX
+      XX  XX  XX
+      
+          XX
+          XX
+           
+           
+           
+     XX  XX  XX
+     XX  XX  XX
+     
+        
+        
+         XX
+         XX
+         
+      XX    XX
+      XX    XX
+      
+      XX    XX
+      XX    XX
+      
+         XX
+         XX
+         
+         
+         
+         
+         
+         
+         
+         
+text adventure with image above
+
+dream - returns one of several text lines about random dreams unti char unlocks lucid dreaming
+after: bed and computer in void
+checking computer reveals emails from spirit guide
+
+goal is to meet friend from online in the astral plane
+
+white background / black background
+
+dream of garden, gather magical herbs, stay in real life
+
+walk through town, inspect passersby, char is too shy to talk to them
+they complain if you walk too close for no reason?
+
+contrast with astral projection
+
+prominent door in town - locked - open while astral projecting onto some dreamscape
+stairs to the astral plane?
+
+goddess - only option > supplicate
+
+area of the astral plane that you cannot leave
+(with monsters!)
+
+
+
+Far above, a giant ghostly serpent winds its way through the sea of stars.
+
+PsychicRosary
+NumenGnosis
+LonelyWiccan (you?)
+
+
+
+SCROPT
+
+game starts in bedroom. intro of character?
+
+starting plot - 
+you're relatively new to magick and are trying out basic spells
+PsychicRosary is very helpful
+on your to do list: 
+ - craft/cast potion or spell (for what?) - need herbs
+ - 
+should go to town at least once to see it before it gets surreal
+
+
+
+
+
+EXAMINE
+ - BED
+ - ALTAR
+ - COMPUTER
+ - DIAGRAM
+ - PLANTS
+
+INTERACT: call ACTIONSET : [ SLEEP, INTERNET, (SUMMON), (BREW), (PRAY) ]
+
+GO OUT: change LOCATION : TOWN
+
+
+
+a LOCATION populates the picture window with a picture. it also populates the text box with default text?
+
+
+
+an ACTION is a menu option at the bottom of the screen. what can ACTIONS do?
+change LOCATION
+summon an ACTIONSET
+special things
+
+
+let's not keep examine and interact as default options
+
+
+
+CONTROLLER
+state: game state
+events: tell picture and textbox what to display
+
+PICTURE
+state: picture
+events: transition?
+
+TEXTBOX
+state: text
+events: none
+
+ACTIONS
+state: 
+  actions array
+events: 
+  select action
+  click action
+  
+
+
+load message (message)
+load actionset (actionset)
+load picture (picture)
+animate action (action)
+
+
+
+
+TITLE SCREEN
+---------
+
+[title]
+
+loadSave
+
+NEW GAME
+  newSave
+  loadGame
+  
+LOAD GAME
+  loadGame
+  
+OPTIONS
+  load options menu somehow
+
+
+MENU SCREEN
+----------
+
+RESUME
+  toggleMenu
+OPTIONS
+  gotoOptions
+QUIT
+  quitGame  
+
+

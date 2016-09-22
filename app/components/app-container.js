@@ -1,6 +1,6 @@
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import AppComponent from './app-component'
-import {readKey} from './actions'
+import {readKey} from '../actions'
 
 const mapStateToProps = (state, ownProps) => {  
   return {

@@ -1,37 +1,24 @@
+export const defaultSave = {
+  msg: '',
+  pic: '',
+  actns: [],
+  flags: []
+}
+
 export const messages = [
   {
-    text: "This is a redux test message",
-    id: "test1",
+    text: "Welcome to the engine. This is the initial message. Of course, if this were actually a game it would be something story related. But it's not :( Even so, this text still has to be way longer to fully test the textArray feature. It's pretty cool! The only thing you have to take into account is that messages that appear alongside actions should still be three lines long. Maybe I'll write something to truncate them, I don't know.",
+    id: "first",
     next: "test2"
   },
   {
-    text: "You have made it to test 2, hopefully with the NEXT function",
+    text: "This is the second text block. It's the first one where actions should appear. So, let's make it relatively long to make sure it looks okay when actions appear below a three (or four!??!?) line block.",
     id: "test2",
     next: null
   },
   {
-    text: "The quick brown fox jumped over the lazy dog. The lazy dog has been getting real sick of this shit",
-    id: "lazy",
-    next: "lazy2"
-  },
-  {
-    text: "So the dog bit the fox right in his stupid fox face.",
-    id: "lazy2",
-    next: null
-  },
-  {
-    text: "Warm and cozy. You love your ghost-patterned sheets.",
-    id: "room_bed",
-    next: null
-  },
-  {
-    text: "Various burning candles give off a bouquet of scents.",
-    id: "room_altar",
-    next: null
-  },
-  {
-    text: "You wonder what your friends have to say today...",
-    id: "room_comp",
+    text: "Action start!!!!!! !!!!!!!! !!!!!!!!!!!!! !!!!!!!!! !!!!!!!!!!!!!!!!!!",
+    id: "abcd",
     next: null
   }
 ]
@@ -53,57 +40,72 @@ export const pictures = [
 
 export const actns = [
   {
-    name: "EXIT",
-    id: "bed_exit",
-    script: {msg: 'lazy'},
-    show: true
+    id: "yeah",
+    name: "LET'S DO THIS",  
+    scripts: [{
+      type: "loadItems",
+      value: ''
+    }]
+  }
+]
+
+export const menuActions = [
+{
+    id: "resume",
+    name: "RESUME",
+    scripts: [{
+      type: '',
+      value: ''
+    }]
   },
   {
-    name: "ENTER",
-    id: "bed_enter",
-    script: () => {
-      console.log ('help me')
-    },
-    show: true
+    id: "options",
+    name: "OPTIONS",
+    scripts: [{
+      type: '',
+      value: ''
+    }]
   },
   {
-    name: "SIT",
-    id: "test_sit",
-    script: () => {
-      console.log ('help me')
-    },
-    show: true
+    id: "quit",
+    name: "QUIT",
+    scripts: [{
+      type: '',
+      value: ''
+    }]
+  }
+]
+
+export const titleActions = [
+  {
+    id: "new_game",
+    name: "NEW GAME",
+    scripts: [
+      {
+        type: "action",
+        value: "NEW_SAVE"
+      },
+      {
+        type: "action",
+        value: "LOAD_GAME"
+      }
+    ]
   },
   {
-    name: "STAND",
-    id: "test_stand",
-    script: () => {
-      console.log ('help me')
-    },
-    show: true
+    id: "load_game",
+    name: "LOAD GAME",
+    scripts: [{
+      type: "action",
+      value: "LOAD_GAME"
+    }],
+    show: ['hasSave']
   },
   {
-    name: "COMPUTER",
-    id: "ex_bed_computer",
-    script: {msg: 'room_comp'},
-    show: true
-  },
-  {
-    name: "ALTAR",
-    id: "ex_bed_altar",
-    script: {msg: 'room_altar'},
-    show: true
-  },
-  {
-    name: "BED",
-    id: "ex_bed_bed",
-    script: {msg: 'room_bed'},
-    show: true
-  },
-  {
-    name: "EXAMINE",
-    id: "bed_examine",
-    script: {actns: ['ex_bed_bed', 'ex_bed_computer', 'ex_bed_altar'], back: true},
-    show: true
+    id: "options",
+    name: "OPTIONS",
+    scripts: [{
+      type: "loadItems",
+      value: {msg: "abcd", actns: ["ex_bed_bed"]}
+    }]
   }
 ]

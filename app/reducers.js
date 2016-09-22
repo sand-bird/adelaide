@@ -1,38 +1,64 @@
 import * as actions from './actions'
-import {messages, pictures, actns} from './src/game'
-
-const newLineify = (string, interval) => {
-  let lines = []
-  // our starting index
-  let i = 0
-  // distance of space from i
-  let j = 0
-  while (i + interval < string.length) {
-    j = string.slice(i, i + interval).lastIndexOf(" ")
-    console.log("j: " + j)
-    lines.push (string.slice(i, i + j))
-    i += j
-    console.log("i: " + i + "    j: " + j)
-  }
-  lines.push(string.slice(i, string.length))
-  return (lines.join("\n"))
-}
+import * as game from './src/game'
+import {newLineify, newMessageify, filterActions} from './utils'
 
 const reducers = (state, action) => {
+
+  /* ~~~~~~~~~~~~~~~~~~ *
+   *  UTIL METHODS YAY  *
+   * ~~~~~~~~~~~~~~~~~~ */
+
+  // wrapper for Object.assign because pretty
+  const generateState = (...args) => {
+    return Object.assign({}, state, ...args)
+  }
+  
+  // for when there are too many copies
+  const mutateState = (state, object) => {
+    for (k in object) state[k] = object[k]
+    return state
+  }
+  
+  
+  let activeActions = 
+    state.screen == 'GAME' ? filterActions(state.actions, state.save) :
+    state.screen == 'MENU' ? filterActions(game.menuActions, state.save) :
+    state.screen == 'TITLE' ? filterActions(game.titleActions, state.save) :
+    state.screen == 'OPTIONS' ? filterActions(game.optionsActions, state.save) : []
+    
+  let msgHasMore = Array.isArray(state.msg.text) && state.textArrayIndex < state.msg.text.length - 1
+    
+  /* ~~~~~~~~~~~~~~~~ *
+   *  REDUCER PROPER  *
+   * ~~~~~~~~~~~~~~~~ */
+
   switch (action.type) {
 
     case 'LOAD_ITEMS':
-      var newState = Object.assign({}, state)
+      var newState = generateState()
 
       if (action.object.msg) {   
-        var newMsg = messages.find( 
+        var newMsg = game.messages.find( 
           msg => { return msg.id === action.object.msg } 
         )
         
-        newMsg.text = newLineify(newMsg.text, state.textWidth)
+        // don't change what works to what doesn't
+        // TODO : implement this for the others
+        if (typeof(newMsg) === 'undefined')
+          return
+        
+        newMsg.text = 
+          newMessageify(
+            newLineify(
+              newMsg.text, state.settings.textWidth
+            ), state.settings.textLines
+          )
+        
+        console.log(newMsg.text)
 
         newState.msg = newMsg
         newState.currentText = ''
+        newState.textArrayIndex = 0
         newState.typeQueue = []
       }
       if (action.object.actns) {
@@ -40,13 +66,13 @@ const reducers = (state, action) => {
         // do this complicated bullshit to make sure our
         // actions show up in the order we specified
         action.object.actns.forEach ( newActn => {
-          newActns.push( actns.find ( actn => 
+          newActns.push( game.actns.find ( actn => 
             { return actn.id === newActn }  
           ))
         })
         if (action.object.back) {
-        // if this actionset change is back-able, save
-        // the previous actionset and currentaction
+          // if this actionset change is back-able, save
+          // the previous actionset and currentaction
           newState.lastActions = newState.actions
           newState.lastCurrentAction = newState.currentAction
         }
@@ -56,10 +82,9 @@ const reducers = (state, action) => {
         }
         newState.currentAction = state.lastCurrentAction
         newState.actions = newActns
-        console.log(newState)
       }
       if (action.object.pic) {   
-        var newPic = pictures.find( 
+        var newPic = game.pictures.find( 
           pic => { return pic.id === action.object.pic } 
         )
         newState.picture = newPic
@@ -68,116 +93,177 @@ const reducers = (state, action) => {
       return newState
       
     case 'NEXT_MESSAGE':
-      return reducers(state, actions.loadItems({msg: state.msg.next}))
+      if (typeof(state.msg.next) === 'string')
+        return reducers(state, actions.loadItems({msg: state.msg.next}))
+        
+      else if (typeof(state.msg.next) === 'object')
+        // load multiple items at once, for "cutscenes"
+        // careful cause this can override a loadItems action i guess
+        return reducers(state, actions.loadItems(state.msg.next))
+      
+      // if it's not a string or an object we don't care for it  
+      else return state
       
     case 'LOAD_SAVE':
-      var newState = Object.assign({}, state)
- 
-      newState.save = action.save
- 
-      return newState
+      return generateState({save: action.save})
       
     case 'NEW_SAVE':
-      var newState = Object.assign({}, state)
- 
-      newState.save = ''
- 
-      return newState
-      
+      // TODO: make sure this loads a default state
+      return state
+    
+    case 'LOAD_GAME':
+      return generateState(
+        reducers(state, actions.loadItems(state.save)),
+        {screen: 'GAME'}
+      )
+
     case 'READ_KEY':
-      var newState = Object.assign({}, state)
+      var newState = generateState()
       
-      var key = action.key
-      newState.lastKey = key
+      newState.lastKey = action.key
       
-      if (key == "ArrowLeft") {
-        if (state.currentAction < 0 || state.currentAction >= state.actions.length)
-          newState.currentAction = state.actions.length - 1
-        else if (state.currentAction != 0) 
-          newState.currentAction = state.currentAction - 1
-      }
-      else if (key == "ArrowRight") {
-        if (state.currentAction < 0 || state.currentAction >= state.actions.length)
-          newState.currentAction = 0
-        else if (state.currentAction != state.actions.length - 1) 
-          newState.currentAction = state.currentAction + 1
-      }
-      else if (key == "Enter" || key == 'z' || key == ' ') {
-        if (newState.typing)
-          return reducers(newState, actions.completeType())
-        else if (newState.msg.next !== null)
-          return reducers(newState, actions.nextMessage())
-        else if (newState.actions.length > 0 && newState.currentAction >= 0 )
-          return reducers(newState, actions.invokeAction())
-      }
-      else if (key == "Backspace" || key == 'x') {
-        if (newState.lastActions.length > 0) {
-          newState.currentAction = newState.lastCurrentAction
-          console.log(newState)
-          return reducers(newState, actions.loadItems(
-            {actns: state.lastActions.map(actn => {return actn.id}) }
-          ))
-        }
-      }
-      else if (key == "Escape") {
-        newState.screen = 'MENU'
-      }
+      console.log("red key "+ action.key)
       
-      return newState
+      switch(action.key) {
+ 
+        case "ArrowLeft":
+          if (state.currentAction < 0 || state.currentAction >= activeActions.length)
+            newState.currentAction = activeActions.length - 1
+          else if (state.currentAction != 0) 
+            newState.currentAction = state.currentAction - 1
+          return newState
+
+        case "ArrowRight":
+          if (state.currentAction < 0 || state.currentAction >= activeActions.length)
+            newState.currentAction = 0
+          else if (state.currentAction != activeActions.length - 1) 
+            newState.currentAction = state.currentAction + 1
+          return newState
+        
+        case "Enter":
+        case 'z':
+        case ' ':
+          if (newState.typing)
+            return reducers(newState, actions.completeType())
+          else if (msgHasMore)
+            return generateState(newState, {
+              textArrayIndex: newState.textArrayIndex + 1,
+              currentText: '',
+              typeQueue: []
+            })
+          else if (newState.msg.next)
+            return reducers(newState, actions.nextMessage())
+          else if (newState.currentAction >= 0 )
+            return reducers(newState, actions.invokeAction())
+        
+        case "Backspace":
+        case 'x':
+          if (newState.lastActions.length > 0) {
+            newState.currentAction = newState.lastCurrentAction
+            return reducers(newState, actions.loadItems(
+              {actns: state.lastActions.map(actn => {return actn.id}) }
+            ))
+          }
+          else return newState
+        
+        case "Escape":
+          return reducers(newState, actions.toggleMenu())
+        
+        default:
+          return newState
+      }
       
     case 'SET_CURRENT_ACTION':
-      var newState = Object.assign({}, state)
-
-      newState.currentAction = action.action
- 
-      return newState
+      return generateState({currentAction: action.index})
     
     case 'REMOVE_CURRENT_ACTION':
-      var newState = Object.assign({}, state)
- 
-      newState.currentAction = -1
- 
-      return newState
+      return generateState({currentAction: -1})
       
     case 'INVOKE_ACTION':
-      var source = state.actions[state.currentAction].script
-      var newState
+      var newState = generateState()
       
-      if (typeof(source) === 'function')
-        newState = source()
-      else if (typeof(source) === 'object')
-        newState = reducers(state, actions.loadItems(source))
+      activeActions[state.currentAction].scripts.forEach ( source => {
+        // a REFERENCE!!!! to newState if it's populated already
+        // or state otherwise. (in case this is > the 1st loop)
+        let currentState = newState ? newState : state
+        switch (source.type) {
+        
+          case 'function':
+            // a necessary evil! so we can run our 
+            // function in the context of reducers
+            newState = eval('(' + source.value.toString() + ')()')
+            
+          case 'loadItems':
+            newState = reducers(currentState, actions.loadItems(source.value))
+            break
+            
+          case 'setState':
+            newState = generateState(source.value)
+            break
+            
+          case 'action':
+            if (typeof(source.value) === 'string')
+              // shorthand for argumentless actions is just the type string
+              newState = reducers(currentState, {type: source.value})
+            else newState = reducers(currentState, source.value)
+            break
+           
+          case 'relay': 
+            // action's script is the id of another action
+            // whose script we want to execute
+            newState = reducers(currentState, actions.invokeAction(
+              game.actns.find ( actn => 
+                { return actn.id === source.script }  
+              )
+            ))    
+            break
+        }
+      })
+      
+      console.log("end of invoke action")
+      console.log(newState)
       
       if (newState) return newState
       else return state
       
     case 'TYPE':
-      var newState = Object.assign({}, state)
-      
-      newState.currentText += action.char
-      newState.typing = action.more
-      
-      return newState
+      return generateState({
+        currentText: state.currentText + action.char,
+        typing: action.more
+      })
       
     case 'COMPLETE_TYPE':
+      
+      let assign
+      // it's a little bit of a hack, but this action handles
+      // the logic behind multi-text messages.
+      
+      if (Array.isArray(state.msg.text)) {
+        assign = {
+          currentText: state.msg.text[state.textArrayIndex],
+          typeQueue: [],
+          typing: false
+        }
+      }
+      else assign = {
+        currentText: state.msg.text,
+        typeQueue: [],
+        typing: false
+      } 
+      
       for (let i = 0; i < state.typeQueue.length; i++) {
         clearTimeout(state.typeQueue[i])
       }
       
-      var newState = Object.assign({}, state)
-       
-      newState.currentText = newState.msg.text
-      newState.typeQueue = [] 
-      newState.typing = false
-       
-      return newState 
+      return generateState(assign)
       
     case 'SET_TYPE_QUEUE':
-      var newState = Object.assign({}, state)
+      return generateState({typeQueue: action.queue})
       
-      newState.typeQueue = action.queue
+    case 'TOGGLE_MENU':
       
-      return newState
+      return state
+    
  
     default:
       return state

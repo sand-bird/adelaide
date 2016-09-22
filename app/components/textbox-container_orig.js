@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
 import TextBoxComponent from './textbox-component'
-import {type, setTypeQueue} from './actions'
+import {type, setTypeQueue} from '../actions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
     text: state.currentText,
-    abort: state.typeAborted
+    abort: state.typeAborted,
   }
 }
 

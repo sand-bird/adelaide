@@ -1,7 +1,5 @@
 import React from 'react'
-import Typist from 'react-typist'
 import functional from 'react-functional'
-import Measure from 'react-measure'
 
 const TextBoxComponent = ({text, typing, handleType}) => {
   return (

@@ -1,15 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Game from './src/game'
-import Sound from 'react-sound'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import functional from 'react-functional'
 
+import MenuScreenContainer from './menuscreen-container'
 import GameScreenContainer from './gamescreen-container'
+import TitleScreenContainer from './titlescreen-container'
 
 const AppComponent = ({screen, handleKeyDown, handleClick, handleRightClick}) => { 
   return (
-    <div id="app" tabIndex={0} onKeyDown={handleKeyDown} onClick={handleClick} onContextMenu={handleRightClick} ref="app">
+    <div id="app" ref="app"
+      tabIndex={0} 
+      onKeyDown={handleKeyDown} 
+      onClick={handleClick} 
+      onContextMenu={handleRightClick}
+    >
       <ReactCSSTransitionGroup 
         transitionName="picture" 
         transitionAppearTimeout={1000} 
@@ -18,7 +23,8 @@ const AppComponent = ({screen, handleKeyDown, handleClick, handleRightClick}) =>
         transitionAppear={true}
       >
         { 
-          screen == 'MENU' ? <MenuScreen/> : 
+          screen == 'TITLE' ? <TitleScreenContainer/> : 
+          screen == 'MENU' ? <MenuScreenContainer/> : 
           screen == 'GAME' ? <GameScreenContainer/> : 
           <div id="displayerror">SOMETHING WENT WRONG...</div>
         }
@@ -30,12 +36,6 @@ const AppComponent = ({screen, handleKeyDown, handleClick, handleRightClick}) =>
 const options = {
   componentDidMount: (props, refs) => 
     ReactDOM.findDOMNode(refs.app).focus()
-}
-
-const MenuScreen = () => {
-  return (
-    <div className="menu" />
-  )
 }
 
 export default functional(AppComponent, options)
