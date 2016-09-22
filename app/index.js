@@ -12,8 +12,8 @@ var defaultState = {
   picture: {},
   actions: [],
   lastActions: [],
-  currentAction: -1,
-  lastCurrentAction: -1,
+  currentAction: 0,
+  lastCurrentAction: 0,
   currentText: '',
   textArrayIndex: -1,
   typing: false,
@@ -25,7 +25,7 @@ var defaultState = {
     msg: 'first',
     pic: 'bedroom',
     actns: ['yeah'],
-    flags: []
+    flags: ['hasSave']
   },
 
   settings: {

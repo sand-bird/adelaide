@@ -80,7 +80,10 @@ const reducers = (state, action) => {
           newState.lastActions = []
           newState.lastCurrentAction = -1
         }
-        newState.currentAction = state.lastCurrentAction
+        newState.currentAction = 
+          state.lastCurrentAction >= 0 ? state.lastCurrentAction :
+          // autoselect single actions wooo
+          newActns.length == 1 ? 0 : 0
         newState.actions = newActns
       }
       if (action.object.pic) {   
