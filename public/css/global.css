@@ -168,10 +168,8 @@ p {
 
 #game-actions ul li {
   display: inline-block;
-  background-color: #0f0;
-  border: 1px solid #F0F;
   text-align:center;
-  padding: 0px 30px;
+  padding: 0px 24px;
   white-space: nowrap;
 }
 
@@ -209,7 +207,7 @@ ul, li {
 }
 
 .current span:before {
- content: "#";
+ content: ">";
  width: 20px;
  position: absolute;
  left: -20px;

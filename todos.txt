@@ -6,3 +6,4 @@
 * sprites
 * picture load properly
 * title > game fade animation
+* change pagifyActions to split based on the length of the actions' names

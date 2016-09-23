@@ -28,15 +28,21 @@ const reducers = (state, action) => {
   let actnsHasPages = state.actionPageIndex >= 0 
     && Array.isArray(state.actions[state.actionPageIndex])
     
+  let rightmostAction = actnsHasPages ? 
+    state.actions[state.actionPageIndex].length - 1 :
+    state.actions.length - 1
+    
   let actnsHasPrev = actnsHasPages && state.actionPageIndex > 0
   let actnsHasNext = actnsHasPages
     && state.actionPageIndex < state.actions.length - 1
   
+  console.log("hasnext")
+  console.log(actnsHasNext)
+  
   let msgHasMore = Array.isArray(state.msg.text) 
     && state.textArrayIndex < state.msg.text.length - 1
     
-  let noCurrAction = state.currentAction < 0 
-    || state.currentAction >= activeActions.length
+  let noCurrAction = state.currentAction < 0
     
   /* ~~~~~~~~~~~~~~~~ *
    *  REDUCER PROPER  *
@@ -142,7 +148,7 @@ const reducers = (state, action) => {
  
         case "ArrowLeft":
           if (noCurrAction)
-            newState.currentAction = activeActions.length - 1
+            newState.currentAction = rightmostAction
           else if (state.currentAction > 0)
             newState.currentAction = state.currentAction - 1
           else if (actnsHasPrev) {
@@ -156,13 +162,17 @@ const reducers = (state, action) => {
           return newState
 
         case "ArrowRight":
-          if (noCurrAction)
-            newState.currentAction = 0
-          else if (state.currentAction < activeActions.length - 1) 
-            newState.currentAction = state.currentAction + 1
+          if (noCurrAction) {
+            console.log("nocurraction")
+          newState.currentAction = 0 }
+          else if (state.currentAction < rightmostAction) {
+            console.log("< rightmost")
+          newState.currentAction = state.currentAction + 1}
           else if (actnsHasNext) {
-            newState.actionPageIndex = state.actionPageIndex + 1
+            console.log("hasnezt")
+            newState.actionPageIndex = newState.actionPageIndex + 1
             newState.currentAction = 0
+            console.log(state.actionPageIndex)
           }
           return newState
         

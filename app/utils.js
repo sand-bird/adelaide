@@ -19,19 +19,23 @@ export const everyNthIndexOf = (string, pattern, lines) => {
     return indices
 }
 
-export const newLineify = (string, interval) => {
+export const breakString = (string, interval, breakOn=" ") => {
   let lines = []
   // our starting index
   let i = 0
   // distance of space from i
   let j = 0
   while (i + interval < string.length) {
-    j = string.slice(i, i + interval).lastIndexOf(" ")
-    lines.push (string.slice(i, i + j))
+    j = string.slice(i, i + interval).lastIndexOf(breakOn)
+    lines.push (string.slice(i, i + j).trim())
     i += j
   }
-  lines.push(string.slice(i, string.length))
-  return (lines.join("\n"))
+  lines.push(string.slice(i, string.length).trim())
+  return lines
+}
+
+export const newLineify = (string, interval) =>  {
+  return breakString(string, interval).join("\n")
 }
 
 export const newMessageify = (string, lines) => {
@@ -62,8 +66,7 @@ export const fancyFlatten = (array) => {
   return newArray
 }
 
-export const pagifyActions = (actions, pageSize) => {
-  // we don't trust old pagify jobs. let's start from scratch
+const pagifyActionsOld = (actions, pageSize) => {
   if (Array.isArray(actions[0]))
     actions = fancyFlatten(actions)
   
@@ -82,6 +85,29 @@ export const pagifyActions = (actions, pageSize) => {
       }
     })
     return newActions
+  }
+  else return actions
+}
+
+export const pagifyActions = (actions, pageSize) => {
+  // we don't trust old pagify jobs. let's start from scratch
+  if (Array.isArray(actions[0]))
+    actions = fancyFlatten(actions)
+  
+  let actionText = breakString (
+    actions.map(action => action.name).join('    '), 36, '  '
+  )
+  
+  if (actionText.length > 1) {
+    let arr = actionText.map( str => str.split('    '))
+    let i = 0
+    arr.forEach( page => {
+      page.forEach( (action, index) => {
+        page[index] = actions[i]
+        i++
+      })
+    })
+    return arr
   }
   else return actions
 }

@@ -7,7 +7,7 @@ const actionTypes = [
 ]
 
 export const defaultSave = {
-  msg: 'abcd',
+  msg: 'test2',
   pic: 'bedroom',
   actns: ['actn1', 'actn2', 'actn3', 'actn4', 'actn5', 'actn6', 'actn7'],
   flags: []
