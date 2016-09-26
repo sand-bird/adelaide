@@ -3,11 +3,11 @@ import functional from 'react-functional'
 
 const TextBoxComponent = ({text, typing, handleType, more}) => {
   return (
-      <div id="textbox">
-        {text.split("\n").map( (line, index, text) => 
-          <p key={index}>{line}</p>
-        )}
-      </div>
+    <div id="textbox">
+      {text.split("\n").map( (line, index, text) => 
+        <p key={index}>{line}</p>
+      )}
+    </div>
   )
 }
 

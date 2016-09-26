@@ -34,8 +34,11 @@ function createWindow () {
   mainWindow = new BrowserWindow(browserOptions)
 
   mainWindow.loadURL('file://' + __dirname + '/index.html')
+  setTimeout(() => {mainWindow.reload()}, 500)
   
   mainWindow.focusOnWebView()
+  console.log(mainWindow.getSize())
+  console.log(mainWindow.getContentSize())
 
   mainWindow.on('closed', () => {
     mainWindow = null

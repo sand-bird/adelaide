@@ -4,6 +4,7 @@ import TextBoxContainer from './textbox-container'
 import ActionsContainer from './actions-container'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Delay from 'react-delay'
+import PixelAlign from './util/pixelalign'
 
 const GameScreenComponent = ({text, picture, lastKey /*for debugging*/, showActions, textSpeed, more, style}) => {
   return ( 
@@ -32,7 +33,12 @@ const GameScreenComponent = ({text, picture, lastKey /*for debugging*/, showActi
               </ReactCSSTransitionGroup>
             </Delay> 
           : undefined }
-            {more ? <Delay wait={250}><span className="more">>></span></Delay> : undefined }
+            {more ? 
+              <Delay wait={250}>
+                <div className="more">
+                  <PixelAlign>>></PixelAlign>
+                </div>
+              </Delay> : undefined }
           </div>
           </Delay>
       </div>

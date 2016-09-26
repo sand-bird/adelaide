@@ -2,6 +2,8 @@ import React from 'react'
 import ActionsContainer from './actions-container'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import Delay from 'react-delay'
+import Measure from 'react-measure'
+import PixelAlign from './util/pixelalign'
 
 const TitleScreenComponent = ({lastKey /*for debugging*/, actions}) => {
   return (
@@ -11,7 +13,11 @@ const TitleScreenComponent = ({lastKey /*for debugging*/, actions}) => {
       transitionAppear={true}
     >
       <div id="title">
-        <div className="game-title">ADELAIDE</div>
+        
+        <div className="game-title">
+        <PixelAlign>ADELAIDE</PixelAlign>
+        </div>
+        
         <Delay wait={1000}>
           <ReactCSSTransitionGroup 
             transitionName="action" 

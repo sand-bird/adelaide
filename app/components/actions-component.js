@@ -1,5 +1,7 @@
 import React from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import Measure from 'react-measure'
+import PixelAlign from './util/pixelalign'
 
 const ActionsComponent = (
     {actions, title, handleMouseOver, handleMouseOut, currentAction, hasNext, hasPrev}) => {
@@ -30,7 +32,9 @@ const Action = (
   
   return (
     <li className={className + (isCurrent ? ' current' : '')}>
-        <span onMouseOver={onMouseOver} onMouseOut={onMouseOut}>{name}</span>
+        <PixelAlign>
+          <span onMouseOver={onMouseOver} onMouseOut={onMouseOut}>{name}</span>
+        </PixelAlign>
     </li>
   )
 }

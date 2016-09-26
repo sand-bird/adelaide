@@ -2,12 +2,15 @@ import React from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import TextBoxContainer from './textbox-container'
 import Delay from 'react-delay'
+import PixelAlign from './util/pixelalign'
 
 const SplashScreenComponent = () => {
 
   return (
       <div id="splash">
-        <div className="game-title">ADELAIDE</div>
+        <div className="game-title">
+          <PixelAlign>ADELAIDE</PixelAlign>
+        </div>
         <Delay wait={3000}>
           <ReactCSSTransitionGroup 
             transitionName="quote" 
@@ -15,9 +18,9 @@ const SplashScreenComponent = () => {
             transitionAppear={true}
           >
             <div className="quote">
-              <p>"Magick is the science and art of causing</p>
-              <p>change to occur in conformity with will."</p>
-              <p>- Aleister Crowley</p>
+              <PixelAlign>"Magick is the science and art of causing</PixelAlign>
+              <PixelAlign>change to occur in conformity with will."</PixelAlign>
+              <PixelAlign>- Aleister Crowley</PixelAlign>
             </div>
           </ReactCSSTransitionGroup>
         </Delay>

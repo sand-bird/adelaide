@@ -87,6 +87,9 @@ ul, li
   bottom: 0
   overflow: hidden
 
+#subpixel > *
+  width: auto
+  height: auto
 
 /* ~~~~~~~~~ *
 /*  PICTURE  *
@@ -117,6 +120,7 @@ ul, li
   animation: blink 2s infinite
   delay-animation: 1s
   opacity: 0
+  text-align: left
 
 .text-holder
   text-align: left
@@ -188,11 +192,13 @@ p
 /* ~~~~~~~~~~~~~ *
 
 .game-title
-  font-size: $title_size
   position: absolute
   width: 100%
   text-align: center
   top: $title_top
+
+.game-title span
+  font-size: $title_size
   
 #splash
   animation: splash 6s 1
