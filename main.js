@@ -5,11 +5,13 @@ const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const fs = require('fs')
+const ipc = electron.ipcMain
 
 require('electron-reload')(__dirname+'/public')
 
-var p = path.join(__dirname, '/', 'game.config')
-fs.writeFileSync(p, "abcds")
+var varsFile = path.join(__dirname, '/', 'vars.json')
+
+let scale = require('./app/vars.json').scale
 
 let mainWindow
 
@@ -19,8 +21,8 @@ global.sharedObject = {
 
 function createWindow () {
   const browserOptions = {
-    width: 646,
-    height: 505,
+    width: 324 * scale,
+    height: 252 * scale,
     maximizeable: false,
     icon:'public/img/logo.png',
     resizable: false,
@@ -40,6 +42,11 @@ function createWindow () {
   })
   
 }
+
+ipc.on('resize', (event, arg) => {
+  console.log(arg)
+  mainWindow.setSize(324, 252)
+})
 
 app.on('ready', createWindow)
 

@@ -3,11 +3,19 @@ import GameScreenComponent from './gamescreen-component'
 
 const mapStateToProps = (state, ownProps) => {
   
-  var thisText = Array.isArray(state.msg.text) ?
+  let thisText = Array.isArray(state.msg.text) ?
     state.msg.text[state.textArrayIndex] : state.msg.text
     
-  var msgHasMore = Array.isArray(state.msg.text) &&
+  let msgHasMore = Array.isArray(state.msg.text) &&
     state.textArrayIndex < state.msg.text.length - 1
+    
+  let style = state.dark ? {
+    backgroundColor: "#111",
+    color: "#EEE",
+  } : {
+    backgroundColor: "#FFF",
+    color: "#333",
+  }
   
   return {
     text: thisText,
@@ -15,7 +23,8 @@ const mapStateToProps = (state, ownProps) => {
     lastKey: state.lastKey,
     showActions: state.msg.next == null && !state.typing && !msgHasMore,
     textSpeed: state.settings.textSpeed,
-    more: !state.typing && (msgHasMore || state.msg.next)
+    more: !state.typing && (msgHasMore || state.msg.next),
+    style: style
   }
 }
 

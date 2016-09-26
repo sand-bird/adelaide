@@ -5,14 +5,6 @@ const ActionsComponent = (
     {actions, title, handleMouseOver, handleMouseOut, currentAction, hasNext, hasPrev}) => {
    
   return (
-    <ReactCSSTransitionGroup 
-      transitionName="action" 
-      transitionAppearTimeout={1000} 
-      transitionEnterTimeout={250}
-      transitionLeaveTimeout={0} 
-      transitionLeave={false}
-      transitionAppear={true}
-    >
       <div id={title + "-actions"} className="actions">
         {hasPrev ? <span className="prev-actions">{'<'}</span> : undefined}
         <ul>
@@ -26,11 +18,9 @@ const ActionsComponent = (
               className={"action-" + actions.length}
             />
           )}
-      
         </ul> 
         {hasNext ? <span className="next-actions">{'>'}</span> : undefined}
       </div>
-    </ReactCSSTransitionGroup >
   )
 }
 

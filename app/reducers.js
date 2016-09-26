@@ -1,6 +1,13 @@
 import * as actions from './actions'
 import * as game from './src/game'
-import {newLineify, newMessageify, filterActions, pagifyActions} from './utils'
+import {newLineify, newMessageify, filterActions, pagifyActions, getVars, setVars} from './utils'
+var ipc = window.require('electron').ipcRenderer
+var remote = window.require('electron').remote
+
+console.log
+
+//var json = {scale: 2}
+//fs.writeFile('./app/vars.json', JSON.stringify(json))
 
 const reducers = (state, action) => {
 
@@ -15,7 +22,7 @@ const reducers = (state, action) => {
   
   // for when there are too many copies
   const mutateState = (state, object) => {
-    for (k in object) state[k] = object[k]
+    for (var k in object) state[k] = object[k]
     return state
   }
   
@@ -30,14 +37,11 @@ const reducers = (state, action) => {
     
   let rightmostAction = actnsHasPages ? 
     state.actions[state.actionPageIndex].length - 1 :
-    state.actions.length - 1
+    activeActions.length - 1
     
   let actnsHasPrev = actnsHasPages && state.actionPageIndex > 0
   let actnsHasNext = actnsHasPages
     && state.actionPageIndex < state.actions.length - 1
-  
-  console.log("hasnext")
-  console.log(actnsHasNext)
   
   let msgHasMore = Array.isArray(state.msg.text) 
     && state.textArrayIndex < state.msg.text.length - 1
@@ -54,6 +58,7 @@ const reducers = (state, action) => {
       var newState = generateState()
 
       if (action.object.msg) {   
+        
         var newMsg = game.messages.find( 
           msg => { return msg.id === action.object.msg } 
         )
@@ -113,13 +118,23 @@ const reducers = (state, action) => {
       return newState
       
     case 'NEXT_MESSAGE':
+      let newState = generateState()
+      
+      if (state.msg.splash) {
+        // SEEMS TO ME like the easiest way to trigger the splash
+        // screen without writing in a whole bunch more code (that
+        // will only be executed once or twice anyway) is just...
+        // to check for it here and do some special behavior accordingly
+         mutateState(newState, {screen: 'SPLASH', dark: false})
+      }
+    
       if (typeof(state.msg.next) === 'string')
-        return reducers(state, actions.loadItems({msg: state.msg.next}))
+        return reducers(newState, actions.loadItems({msg: state.msg.next}))
         
       else if (typeof(state.msg.next) === 'object')
         // load multiple items at once, for "cutscenes"
         // careful cause this can override a loadItems action i guess
-        return reducers(state, actions.loadItems(state.msg.next))
+        return reducers(newState, actions.loadItems(state.msg.next))
       
       // if it's not a string or an object we don't care for it  
       else return state
@@ -131,7 +146,6 @@ const reducers = (state, action) => {
       return generateState({save: game.defaultSave})
      
     case 'LOAD_GAME':
-      console.log("loading game")
       return generateState(
         reducers(state, actions.loadItems(state.save)),
         {screen: 'GAME'}
@@ -141,8 +155,6 @@ const reducers = (state, action) => {
       var newState = generateState()
       
       newState.lastKey = action.key
-      
-      console.log("red key "+ action.key)
       
       switch(action.key) {
  
@@ -163,23 +175,23 @@ const reducers = (state, action) => {
 
         case "ArrowRight":
           if (noCurrAction) {
-            console.log("nocurraction")
-          newState.currentAction = 0 }
+            newState.currentAction = 0
+          }
           else if (state.currentAction < rightmostAction) {
-            console.log("< rightmost")
-          newState.currentAction = state.currentAction + 1}
+            newState.currentAction = state.currentAction + 1
+          }
           else if (actnsHasNext) {
-            console.log("hasnezt")
             newState.actionPageIndex = newState.actionPageIndex + 1
             newState.currentAction = 0
-            console.log(state.actionPageIndex)
           }
           return newState
         
         case "Enter":
         case 'z':
         case ' ':
-          if (newState.typing)
+          if (state.screen == 'SPLASH')
+            return generateState({screen: 'GAME'})
+          else if (newState.typing)
             return reducers(newState, actions.completeType())
           else if (msgHasMore)
             return generateState(newState, {
@@ -189,7 +201,7 @@ const reducers = (state, action) => {
             })
           else if (newState.msg.next)
             return reducers(newState, actions.nextMessage())
-          else if (newState.currentAction >= 0 )
+          else if ( !noCurrAction )
             return reducers(newState, actions.invokeAction())
         
         case "Backspace":
@@ -229,11 +241,11 @@ const reducers = (state, action) => {
             // function in the context of reducers
             newState = eval('(' + source.value.toString() + ')()')
             
-          case 'loadItems':
+          case 'load':
             newState = reducers(currentState, actions.loadItems(source.value))
             break
             
-          case 'setState':
+          case 'set':
             newState = generateState(source.value)
             break
             
@@ -256,9 +268,6 @@ const reducers = (state, action) => {
         }
       })
       
-      console.log("end of invoke action")
-      console.log(newState)
-      
       if (newState) return newState
       else return state
       
@@ -269,10 +278,7 @@ const reducers = (state, action) => {
       })
       
     case 'COMPLETE_TYPE':
-      
       let assign
-      // it's a little bit of a hack, but this action handles
-      // the logic behind multi-text messages.
       
       if (Array.isArray(state.msg.text)) {
         assign = {
@@ -297,10 +303,31 @@ const reducers = (state, action) => {
       return generateState({typeQueue: action.queue})
       
     case 'TOGGLE_MENU':
-      
-      return state
+      if (state.screen == 'GAME')
+        return generateState({screen: 'MENU'})
+      else if (state.screen == 'MENU') {
+        // we have to make sure the typeQueue is clear when we 
+        // come back from the menu, or else it will fill currentText 
+        // with gibberish. calling completeType is the simplest way.
+        if (state.typing)
+          return generateState(
+            reducers(state, actions.completeType()), 
+            {currentText: '', screen: 'GAME'}
+          )
+        else
+          return generateState(
+          {screen: 'GAME'})
+        }
+      else return state
     
- 
+    
+    case 'TOGGLE_OPTIONS':
+      return generateState({optionsMenu: !state.optionsMenu})
+    
+    case 'SET_SCALE':
+      setVars({scale: action.scale})
+      ipc.send('resize', action.scale)
+
     default:
       return state
   }

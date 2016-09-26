@@ -13,10 +13,6 @@ const mapStateToProps = (state, ownProps) => {
     hasPages ? state.actions[state.actionPageIndex] : 
     state.actions
   
-  console.log(state.actionPageIndex)
-  console.log(state.actions)
-  console.log(actions)
-  
   return {
     lastKey: state.lastKey,
     actions: actions,

@@ -99,3 +99,20 @@ export const setTypeQueue = (queue) => {
     queue: queue
   }
 }
+// what it says
+export const toggleMenu = () => {
+  return {
+    type: 'TOGGLE_MENU'
+  }
+}
+export const toggleOptions = () => {
+  return {
+    type: 'TOGGLE_OPTIONS'
+  }
+}
+export const setScale = (scale) => {
+  return {
+    type: 'SET_SCALE',
+    scale: scale
+  }
+}

@@ -252,3 +252,34 @@ QUIT
 quitGame  
 
 
+
+
+
+
+
+
+EXAMINE
+  BED
+  COMPUTER
+  ALTAR
+  BOOKSHELF
+INTERACT
+  BED
+    LIE DOWN
+    SLEEP
+  COMPUTER
+    MAIL
+    BULLETIN
+LEAVE
+
+
+BED
+COMPUTER
+ALTAR
+DOOR
+
+
+
+
+
+

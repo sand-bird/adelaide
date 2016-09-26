@@ -1,19 +1,19 @@
 import React from 'react'
-import ActionsContainer from './actions-container'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
-const MenuScreenComponent = ({lastKey, actions}) => {
+const OptionsComponent = ({scale, textSpeed}) => {
   return (
     <ReactCSSTransitionGroup 
       transitionName="menu" 
       transitionAppearTimeout={750}
       transitionAppear={true}
     >
-      <div id="menu">{lastKey}
-        <ActionsContainer actions={actions} />
+      <div id="options">
+        <div>SCALE: {scale}</div>
+        <div>TEXT SPEED: {textSpeed}</div>
       </div>
     </ReactCSSTransitionGroup>
   )
 }
 
-export default MenuScreenComponent
+export default OptionsComponent

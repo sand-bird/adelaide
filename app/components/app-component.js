@@ -6,6 +6,7 @@ import functional from 'react-functional'
 import MenuScreenContainer from './menuscreen-container'
 import GameScreenContainer from './gamescreen-container'
 import TitleScreenContainer from './titlescreen-container'
+import SplashScreenComponent from './splashscreen-component'
 
 const AppComponent = ({screen, handleKeyDown, handleClick, handleRightClick}) => { 
   return (
@@ -15,20 +16,13 @@ const AppComponent = ({screen, handleKeyDown, handleClick, handleRightClick}) =>
       onClick={handleClick} 
       onContextMenu={handleRightClick}
     >
-      <ReactCSSTransitionGroup 
-        transitionName="picture" 
-        transitionAppearTimeout={1000} 
-        transitionEnterTimeout={500}
-        transitionLeaveTimeout={300}
-        transitionAppear={true}
-      >
-        { 
-          screen == 'TITLE' ? <TitleScreenContainer/> : 
-          screen == 'MENU' ? <MenuScreenContainer/> : 
-          screen == 'GAME' ? <GameScreenContainer/> : 
-          <div id="displayerror">SOMETHING WENT WRONG...</div>
-        }
-      </ReactCSSTransitionGroup>
+      { 
+        screen == 'SPLASH' ? <SplashScreenComponent/> :
+        screen == 'TITLE' ? <TitleScreenContainer/> : 
+        screen == 'MENU' ? <MenuScreenContainer/> : 
+        screen == 'GAME' ? <GameScreenContainer/> : 
+        <div id="displayerror">SOMETHING WENT WRONG...</div>
+      }
     </div>
   )
 }

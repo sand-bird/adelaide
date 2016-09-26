@@ -1,3 +1,5 @@
+var fs = window.require('fs')
+
 /* ~~~~~~~~~~~~~~~~~~ *
  *  UTIL METHODS YAY  *
  * ~~~~~~~~~~~~~~~~~~ */
@@ -140,6 +142,12 @@ export const filterActions = (actions, save) => {
 }
 
 
+export const getVars = () => {
+  return JSON.parse(fs.readFileSync('./app/vars.json'))
+}
 
-
-
+export const setVars = (object) => {
+  var json = getVars()
+  var newJson = Object.assign(json, object)
+  fs.writeFileSync('./app/vars.json', JSON.stringify(newJson))
+}

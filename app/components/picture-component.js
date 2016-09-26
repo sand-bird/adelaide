@@ -1,8 +1,14 @@
 import React from 'react'
 
-const PictureComponent = ({picture}) => {
+const PictureComponent = ({picture, borderColor}) => {
+
+  var style = {
+    backgroundImage: 'url(' + picture + ')',
+    borderColor: borderColor
+  };
+
   return (
-    <div id="picture" /> 
+    <div id="picture" style={style}/>
   )
 }
 

@@ -12,8 +12,9 @@ const TextBoxComponent = ({text, typing, handleType, more}) => {
 }
 
 const options = {
-  componentDidMount: (props, refs) =>  
-    props.handleType(props.more), 
+  componentDidMount: (props, refs) =>  {
+    if (props.text === '') props.handleType(props.more)
+  }, 
   componentDidUpdate: (props, prevProps, refs) => { 
     if (props.text === '') props.handleType(props.more)
   }, 

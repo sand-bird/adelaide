@@ -1,145 +1,122 @@
 const actionTypes = [
-  'function', // calls a function with eval(). for crazy shit only
-  'loadItems', // passes value as param to dispatch.loadItems
-  'setState', // passes value as param to reducers.generateState
+  'load', // passes value as param to dispatch.loadItems
+  'set', // passes value as param to reducers.generateState
   'dispatch', // pass string to call that dispatch with no params, else pass hash with type: type
-  'relay' // calls dispatch.invokeAction on the action id specified
+  'relay', // calls dispatch.invokeAction on the action id specified
+  'function', // calls a function with eval(). for crazy shit only
 ]
 
 export const defaultSave = {
-  msg: 'test2',
-  pic: 'bedroom',
-  actns: ['actn1', 'actn2', 'actn3', 'actn4', 'actn5', 'actn6', 'actn7'],
+  msg: 'star1',
+  pic: 'stars',
+  actns: ['star_fame', 'star_friends', 'star_happy'],
   flags: []
 }
 
 export const messages = [
   {
-    text: "Welcome to the engine. This is the initial message. Of course, if this were actually a game it would be something story related. But it's not :( Even so, this text still has to be way longer to fully test the textArray feature. It's pretty cool! The only thing you have to take into account is that messages that appear alongside actions should still be three lines long. Maybe I'll write something to truncate them, I don't know.",
-    id: "first",
-    next: "test2"
+    text: "\"Look, a shooting star! Did you see it?!\"",
+    id: "star1",
+    next: "star2"
   },
   {
-    text: "This is the second text block. It's the first one where actions should appear. So, let's make it relatively long to make sure it looks okay when actions appear below a three (or four!??!?) line block.",
-    id: "test2",
+    text: "\"Addy, what are you going to wish for?\"",
+    id: "star2",
     next: null
   },
   {
-    text: "Let's test action pages yeahH!!!",
-    id: "abcd",
+    text: "ADELAIDE: Hm... I think... I wanna be famous, someday. Really, really famous!",
+    id: "wish_fame",
+    next: "star3"
+  },
+  {
+    text: "ADELAIDE: I wish for... friends! Lots of nice friends to play with all the time!",
+    id: "wish_friends",
+    next: "star3"
+  },
+  {
+    text: "ADELAIDE: Um, I guess... I just... want to be happy. Is that enough?",
+    id: "wish_happy",
+    next: "star3"
+  },
+  {
+    text: "*chuckle*",
+    id: "star3",
+    next: "star4"
+  },
+  {
+    text: "\"That's a pretty good wish.\"",
+    id: "star4",
+    next: "star5"
+  },
+  {
+    text: "\"...\"",
+    id: "star5",
+    next: "star6"
+  },
+  {
+    text: "\"...Come on, let's go home. It's getting cold out, and mom is gonna worry.\"",
+    id: "star6",
+    splash: true,
+    next: {msg: "bed1", pic: "computer", actns: ["bed_wake"]}
+  },
+  {
+    text: "It's Sunday morning. You are in your bedroom. What will you do?",
+    id: "bed1",
     next: null
   }
 ]
 
 export const pictures = [
   {
-    file: "./public/images/bedroom.png",
+    file: "./app/src/img/bedroom.png",
     id: "bedroom"
   },
   {
-    file: "./public/images/computer.png",
+    file: "./app/src/img/computer.png",
     id: "computer"
   },
   {
-    file: "./public/images/outside.png",
-    id: "outside"
+    file: "./app/src/img/stars.gif",
+    id: "stars"
   }
 ]
 
 export const actns = [
   {
-    id: "yeah",
-    name: "LET'S DO THIS",  
+    id: "star_fame",
+    name: "FAME",
     scripts: [{
-      type: "loadItems",
-      value: ''
+      type: 'load',
+      value: {msg: "wish_fame", actns:[]}
     }]
   },
   {
-    id: "actn1",
-    name: "TEST",  
+    id: "star_friends",
+    name: "FRIENDSHIP",
     scripts: [{
-      type: "loadItems",
-      value: ''
+      type: 'load',
+      value: {msg: "wish_friends", actns:[]}
     }]
   },
   {
-    id: "actn2",
-    name: "LONGTEXT",  
+    id: "star_happy",
+    name: "HAPPINESS",
     scripts: [{
-      type: "loadItems",
-      value: ''
+      type: 'load',
+      value: {msg: "wish_happy", actns:[]}
     }]
   },
   {
-    id: "actn3",
-    name: "MEDIUMTEXT",  
-    scripts: [{
-      type: "loadItems",
-      value: ''
-    }]
-  },
-  {
-    id: "actn4",
-    name: "HAS SPACE",  
-    scripts: [{
-      type: "loadItems",
-      value: ''
-    }]
-  },
-  {
-    id: "actn5",
-    name: "FIVE",  
-    scripts: [{
-      type: "loadItems",
-      value: ''
-    }]
-  },
-  {
-    id: "actn6",
-    name: "SIX",  
-    scripts: [{
-      type: "loadItems",
-      value: ''
-    }]
-  },
-  {
-    id: "actn7",
-    name: "SEVEN",  
-    scripts: [{
-      type: "loadItems",
-      value: ''
-    }]
-  }
-]
-
-export const menuActions = [
-{
-    id: "resume",
-    name: "RESUME",
-    scripts: [{
-      type: '',
-      value: ''
-    }]
-  },
-  {
-    id: "options",
-    name: "OPTIONS",
-    scripts: [{
-      type: '',
-      value: ''
-    }]
-  },
-  {
-    id: "quit",
-    name: "QUIT",
+    id: "bed_wake",
+    name: "WAKE UP",
     scripts: [{
       type: '',
       value: ''
     }]
   }
-]
-
+]  
+  
 export const titleActions = [
   {
     id: "new_game",
@@ -168,8 +145,43 @@ export const titleActions = [
     id: "options",
     name: "OPTIONS",
     scripts: [{
-      type: "loadItems",
-      value: {msg: "abcd", actns: ["ex_bed_bed"]}
+      type: "dispatch",
+      value: "TOGGLE_OPTIONS"
+    }]
+  }
+]
+  
+export const menuActions = [
+  {
+    id: "resume",
+    name: "RESUME",
+    scripts: [{
+      type: 'dispatch',
+      value: 'TOGGLE_MENU'
+    }]
+  },
+  {
+    id: "save",
+    name: "SAVE GAME",
+    scripts: [{
+      type: 'dispatch',
+      value: ''
+    }]
+  },
+  {
+    id: "options",
+    name: "OPTIONS",
+    scripts: [{
+      type: 'dispatch',
+      value: 'TOGGLE_OPTIONS'
+    }]
+  },
+  {
+    id: "quit",
+    name: "QUIT",
+    scripts: [{
+      type: '',
+      value: ''
     }]
   }
 ]

@@ -1,0 +1,315 @@
+  
+//  ³ ´ asterisks
+//  ° ª little arrows
+//  « ¬ little hearts
+//  ® ¯ big hearts
+//  ² ± litle cursors
+//  ¶ µ big cursors
+  
+@font-face 
+  font-family: 'expanded'
+  font-style: normal
+  font-weight: 0
+  src: url('../public/fonts/lexipawideextend.ttf') format('truetype')
+  
+@font-face 
+  font-family: 'condensed'
+  font-style: normal
+  font-weight: 0
+  src: url('../public/fonts/lexipacondensed.ttf') format('truetype')
+  
+// don't change this
+$base_font_size: 16px
+
+$background-color: #FFF
+$color: #333
+
+@if $dark
+  $background-color: #000
+  $color: #F5F5F5
+
+$width: 324px * $scale
+$height: 252px * $scale
+$font_size: $base_font_size * $scale
+
+$picture_width: 225px * $scale
+$picture_height: 125px * $scale
+$total_picture_width: $picture_width + ($scale * 2)
+$total_picture_height: $picture_height + ($scale * 2)
+$picture_top: 20px * $scale
+
+$message_width: 276px * $scale
+$message_top: 165px * $scale
+$message_more_offset: 3px * $scale
+
+$actions_width: $message_width
+$actions_top: 220px * $scale
+$cursor_offset: 10px * $scale
+$actions_arrow_offset: 15px * $scale
+$action_padding: 14px * $scale
+
+$title_size: 4 * $base_font_size * $scale
+$title_top: 75px * $scale
+$title_actions_top: 135px * $scale
+$quote_top: 150px * $scale
+
+
+/* ~~~~~~~~ *
+/*   BODY   *
+/* ~~~~~~~~ *
+
+*, *:before, *:after
+  box-sizing: border-box
+
+body, * 
+  font-family: 'expanded'
+  font-size: $font_size
+  cursor: default
+  margin: 0
+  
+*:focus
+  outline: none
+  
+ul, li
+  text-decoration: none
+  display: inline-block
+  padding: 0
+
+#content
+  width: $width
+  height: $height
+  
+#content, #app, #game, #title, #splash
+  position: absolute
+  left: 0
+  right: 0
+  top: 0
+  bottom: 0
+  overflow: hidden
+
+
+/* ~~~~~~~~~ *
+/*  PICTURE  *
+/* ~~~~~~~~~ *
+
+#picture
+  border: ($scale + 0px) solid $color
+  width: $total_picture_width
+  height: $total_picture_height
+  position: absolute
+  left: ($width - $total_picture_width)/2
+  top: $picture_top
+  background-size: contain
+  
+  img
+    width: $picture_width
+    height: $picture_height
+
+
+/* ~~~~~~~~~ *
+/*  MESSAGE  *
+/* ~~~~~~~~~ *
+
+.more
+  position: absolute
+  right: $message_more_offset * 2
+  bottom: $message_more_offset
+  animation: blink 2s infinite
+  delay-animation: 1s
+  opacity: 0
+
+.text-holder
+  text-align: left
+  width: $message_width
+  position: absolute
+  left: ($width - $message_width)/2
+  top: $message_top
+  
+p
+  white-space: nowrap
+
+
+/* ~~~~~~~~~ *
+/*  ACTIONS  *
+/* ~~~~~~~~~ *
+
+// the cursor
+.current span:before
+  content: $cursor_character
+  width: $cursor_offset
+  position: absolute
+  left: -$cursor_offset
+  text-align: left
+  
+.prev-actions 
+  position: absolute
+  left: -$actions_arrow_offset
+
+.next-actions 
+  position: absolute
+  right: -$actions_arrow_offset
+  
+#game-actions
+  position: absolute
+  width: $actions_width
+  left: ($width - $actions_width)/2
+  top: $actions_top
+  text-align: center
+  
+  ul
+    width: 100%
+    height: $font_size
+    overflow: hidden
+    text-align: center
+    width: auto
+    
+    li 
+      display: inline-block
+      text-align:center
+      padding: 0 $action_padding
+      white-space: nowrap
+      
+      span
+        position: relative
+
+  
+  .action-1
+    min-width: $actions_width / 2
+
+  .action-2
+    min-width: $actions_width / 3
+
+  .action-3
+    min-width: $actions_width / 4
+
+
+/* ~~~~~~~~~~~~~ *
+/*  TITLESCREEN  *
+/* ~~~~~~~~~~~~~ *
+
+.game-title
+  font-size: $title_size
+  position: absolute
+  width: 100%
+  text-align: center
+  top: $title_top
+  
+#splash
+  animation: splash 6s 1
+  
+.quote
+  p
+    font-family: 'condensed' !important
+  text-align: center
+  width: $message_width
+  position: absolute
+  left: ($width - $message_width)/2
+  top: $quote_top
+  
+#title-actions
+  position: absolute
+  width: $actions_width
+  left: ($width - $actions_width)/2
+  top: $title_actions_top
+  text-align: center
+  
+  ul
+    width: 100%
+    height: $font_size
+    overflow: hidden
+    text-align: center
+    width: auto
+    
+    li 
+      display: inline-block
+      text-align:center
+      padding: 0 $action_padding
+      white-space: nowrap
+      
+      span
+        position: relative
+
+
+/* ~~~~~~~~~~~~~ *
+/*  TRANSITIONS  *
+/* ~~~~~~~~~~~~~ *
+
+.game-appear
+  opacity: 0.01
+.game-appear-active
+  opacity: 1
+  transition: opacity 1000ms ease-in
+.game-leave
+  opacity: 1
+.game-leave-active
+  opacity: 0.01
+  transition: opacity 5000ms
+    
+.action-appear 
+  opacity: 0.01
+.action-appear-active
+  opacity: 1
+  transition: opacity 500ms ease-in
+
+.title-appear 
+  opacity: 0.01
+.title-appear-active
+  opacity: 1
+  transition: opacity 2.5s ease-in
+  
+.quote-appear 
+  opacity: 0.01
+.quote-appear-active
+  opacity: 1
+  transition: opacity 1000ms ease-in
+
+.splash-appear 
+  opacity: 0.01
+.splash-appear-active
+  opacity: 1
+  transition: opacity 2000ms ease-in
+
+
+/* ~~~~~~~~~~~~ *
+/*  ANIMATIONS  *
+/* ~~~~~~~~~~~~ *
+
+.shake
+  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both
+  transform: translate3d(0, 0, 0)
+  backface-visibility: hidden
+  perspective: 1000px
+  
+@keyframes splash
+  0%, 20%
+    background: #111
+    color: #EEE
+  100%
+    background: #FFF
+    color: #333
+
+@keyframes shake-long
+  10%, 90%
+    transform: translate3d(-1px, 0, 0)
+  20%, 80%
+    transform: translate3d(2px, 0, 0)
+  30%, 50%, 70% 
+    transform: translate3d(-3px, 0, 0)
+  40%, 60% 
+    transform: translate3d(3px, 0, 0)
+
+@keyframes shake
+  14%, 98%
+    transform: translate3d(-1px, 0, 0)
+  28%, 84%
+    transform: translate3d(2px, 0, 0)
+  42%, 70%
+    transform: translate3d(-3px, 0, 0)
+  56% 
+    transform: translate3d(3px, 0, 0)
+
+@keyframes blink
+  0%, 100%
+    opacity: 0
+  50%
+    opacity: 1

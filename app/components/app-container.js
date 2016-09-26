@@ -4,6 +4,7 @@ import {readKey} from '../actions'
 
 const mapStateToProps = (state, ownProps) => {  
   return {
+    options: state.optionsMenu,
     screen: state.screen
   }
 }

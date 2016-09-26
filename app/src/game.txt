@@ -1,0 +1,29 @@
+!MESSAGES
+
+# ms1:
+The quick brown fox jumped over the lazy dog.
+: >
+
+# msg2:
+The fox has way too much energy.
+: ( pic: 1, actns: act1 act2 act3, msg: msg3 )
+
+
+
+
+!ACTIONS
+
+# act1 : EXIT
+: load (pic: 1, acnts: act1 act2 act3, msg: msg3)
+: set (test: true)
+: show flag1 flag2
+: hide flag3 flag4
+
+# act2 : ENTER
+: dispatch NEW_GAME
+
+# act3 : RELAY
+: call act1
+
+# act4 : FOUR
+: dispatch (READ_KEY, Enter)

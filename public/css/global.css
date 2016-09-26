@@ -1,143 +1,22 @@
-@font-face {
-  font-family: 'condensed';
-  font-style: normal;
-  font-weight: 0;
-  src: url('../fonts/lexipacondensed.ttf') format('truetype');
-}
-@font-face {
-  font-family: 'expanded';
-  font-style: normal;
-  font-weight: 0;
-  src: url('../fonts/lexipaexpanded.ttf') format('truetype');
-}
+/*  
+³ ´ asterisks
+° ª little arrows
+« ¬ little hearts
+® ¯ big hearts
+² ± litle cursors
+¶ µ big cursors
+*/
 
 
-body, * {
-  margin: 0;
-  font-family: 'expanded';
-  font-size: 32px;
-  background-color: #FFF;
-  color: #333;
-  cursor: default
-}
-
-body {
-  width: 100%;
-  height: 100%;
-}
-
-*, *:before, *:after {
-  box-sizing: border-box;
-}
-
-.prev-actions {
-  position: absolute;
-  left: -30px;
-}
-
-.next-actions {
-  position: absolute;
-  right: -30px;
-}
-
-.picture-enter {
-  opacity: 0.01;
-}
-.picture-enter.picture-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-.picture-leave {
-  opacity: 1;
-}
-.picture-leave.picture-leave-active {
-  opacity: 0.01;
-  transition: opacity 300ms ease-in;
-}
-.picture-appear {
-  opacity: 0.01;
-}
-.picture-appear.picture-appear-active {
-  opacity: 1;
-  transition: opacity 1s ease-in;
-}
 
 
-.action-enter {
-  opacity: 0.01;
-}
-.action-enter.action-enter-active {
-  opacity: 1;
-  transition: opacity 250ms ease-in;
-}
-.action-leave {
-  opacity: 1;
-}
-.action-leave.action-leave-active {
-  opacity: 0.01;
-  transition: opacity 250ms ease-in;
-}
-.action-appear {
-  opacity: 0.01;
-}
-.action-appear.action-appear-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
 
 
-#picture {
-  border: 2px solid #333;
-  width: 454px;
-  height: 254px;
-  position: absolute;
-  left: 323px;
-  top: 45px;
-  margin-left: -225px;
-  background-image: url('../img/computer.png');
-}
 
-.game-title {
-  font-size: 128px;
-  position: absolute;
-  width: 100%;
-  text-align: center;
-  top: 150px;
-}
 
-.text-holder {
-  text-align: left;
-  width: 552px;
-  position: absolute;
-  left: 47px;
-  top: 330px;
-}
 
-p {
-  white-space: nowrap;
-}
- 
 
-#game-actions {
-  position: absolute;
-  width: 528px;
-  left: 47px;
-  top: 440px; 
-  text-align: center;
-}
 
-.action-1 {
-  max-width: 100%;
-}
-.action-2 {
-  max-width: 264px;
-}
-.action-3 {
-  max-width: 176px;
-}
-.action-4 {
-  max-width: 132px;
-}
 
 #title-actions {
   position: absolute;
@@ -153,25 +32,11 @@ p {
   top: 60px;
 }
 
-#game-actions ul {
-  width: 100%;
-  text-align: left;
-  height: 28px;
-  overflow: hidden;
-  text-align: center;
-  width: auto;
-}
-
 #menu-actions ul {
   text-align: center;
 }
 
-#game-actions ul li {
-  display: inline-block;
-  text-align:center;
-  padding: 0px 24px;
-  white-space: nowrap;
-}
+#game-actions ul 
 
 #menu-actions ul li {
   float: left;
@@ -193,97 +58,18 @@ p {
   text-align: center;
 }
 
-ul, li {
-  text-decoration: none;
-  display: inline-block;
-  padding: 0;
-}
+
 
 .actions li span {
   font-family: 'expanded';
-  position: relative;
+  position: relative; 
   text-decoration: none;
   text-transform: uppercase;
 }
 
-.current span:before {
- content: ">";
- width: 20px;
- position: absolute;
- left: -20px;
- text-align: left;
-}
 
-#app, #content {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
 
-::selection {
-  background: #fff;
-}
 
-.more {
-  position: absolute;
-  right: 12px;
-  bottom: 6px;
-  animation: blink 2s infinite ;
-  delay-animation: 1s;
-  opacity: 0;
-}
-
-.shake {
-  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-  perspective: 1000px;
-}
-
-@keyframes shake-long {
-  10%, 90% {
-    transform: translate3d(-1px, 0, 0);
-  }  
-  20%, 80% {
-    transform: translate3d(2px, 0, 0);
-  }
-  30%, 50%, 70% {
-    transform: translate3d(-3px, 0, 0);
-  }
-  40%, 60% {
-    transform: translate3d(3px, 0, 0);
-  }
-}
-
-@keyframes shake {
-  14%, 98% {
-    transform: translate3d(-1px, 0, 0);
-  }  
-  28%, 84% {
-    transform: translate3d(2px, 0, 0);
-  }
-  42%, 70% {
-    transform: translate3d(-3px, 0, 0);
-  }
-  56% {
-    transform: translate3d(3px, 0, 0);
-  }
-}
-
-@keyframes blink {
-  0%, 100% {
-    opacity: 0
-  }
-  50% {
-    opacity: 1
-  }
-}
-
-*:focus {
-  outline: none
-}
 
 
 /* 14 -1

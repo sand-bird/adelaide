@@ -4,8 +4,24 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import reducers from './reducers'
 import AppContainer from './components/app-container'
+require('./style.sass')
 
-console.log(localStorage)
+localStorage.clear()
+localStorage.setItem('settings', JSON.stringify({
+    textSpeed: 40,
+    textWidth: 48,
+    textLines: 4,
+    actionsPerPage: 3
+  }))
+
+var settings = 
+  {
+    textSpeed: 40,
+    textWidth: 48,
+    textLines: 4,
+    actionsPerPage: 3
+  }
+console.log(settings)
 
 var defaultState = {
   msg: {},
@@ -21,6 +37,8 @@ var defaultState = {
   typeQueue: [],
   lastKey: '',
   screen: 'TITLE',
+  optionsMenu: false,
+  dark: true,
 
   save: {
     msg: 'first',
@@ -29,13 +47,11 @@ var defaultState = {
     flags: ['hasSave']
   },
 
-  settings: {
-    textSpeed: 30,
-    textWidth: 48,
-    textLines: 4,
-    actionsPerPage: 3
-  }
+  settings: settings
 };
+
+console.log(defaultState.settings)
+console.log(localStorage)
 
 var store = createStore(reducers, defaultState)
 

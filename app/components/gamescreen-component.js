@@ -2,19 +2,41 @@ import React from 'react'
 import PictureComponent from './picture-component'
 import TextBoxContainer from './textbox-container'
 import ActionsContainer from './actions-container'
-
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import Delay from 'react-delay'
 
-const GameScreenComponent = ({text, picture, lastKey, showActions, textSpeed, more}) => {
+const GameScreenComponent = ({text, picture, lastKey /*for debugging*/, showActions, textSpeed, more, style}) => {
   return ( 
-    <div id="game">{lastKey}
-      < PictureComponent picture={picture} />
-      <div className="text-holder">
-        <TextBoxContainer text={text} speed={textSpeed} more={more} />
+    <ReactCSSTransitionGroup 
+      transitionName="game" 
+      transitionAppearTimeout={1000}
+      transitionAppear={true}
+      transitionLeaveTimeout={5000}
+    >
+      <div id="game" style={style}>
+        < PictureComponent picture={picture} borderColor={style.color} />
+        <Delay wait={1000}>
+        <div>
+        <div className="text-holder">
+          <TextBoxContainer text={text} speed={textSpeed} more={more} />
+        </div>
+        
+          {showActions ? 
+            <Delay wait={500}>
+              <ReactCSSTransitionGroup 
+                transitionName="action" 
+                transitionAppearTimeout={500}
+                transitionAppear={true}
+              >
+                <ActionsContainer/>
+              </ReactCSSTransitionGroup>
+            </Delay> 
+          : undefined }
+            {more ? <Delay wait={250}><span className="more">>></span></Delay> : undefined }
+          </div>
+          </Delay>
       </div>
-        {showActions ? <ActionsContainer/> : undefined }
-        {more ? <span className="more">>></span> : undefined }
-    </div>
+    </ReactCSSTransitionGroup>
   )
 }
 
