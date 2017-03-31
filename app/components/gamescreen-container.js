@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import GameScreenComponent from './gamescreen-component'
+import connectWithTransitionGroup from 'connect-with-transition-group'
 
 const mapStateToProps = (state, ownProps) => {
   
@@ -10,7 +11,7 @@ const mapStateToProps = (state, ownProps) => {
     state.textArrayIndex < state.msg.text.length - 1
     
   let style = state.dark ? {
-    backgroundColor: "#111",
+    backgroundColor: "#030303",
     color: "#EEE",
   } : {
     backgroundColor: "#FFF",

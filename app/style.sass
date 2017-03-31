@@ -185,6 +185,9 @@ p
 
   .action-3
     min-width: $actions_width / 4
+    
+  .action-4
+    min-width: $actions_width / 5
 
 
 /* ~~~~~~~~~~~~~ *
@@ -201,7 +204,7 @@ p
   font-size: $title_size
   
 #splash
-  animation: splash 6s 1
+  animation: splash 5s 1
   
 .quote
   p
@@ -247,15 +250,22 @@ p
   transition: opacity 1000ms ease-in
 .game-leave
   opacity: 1
+  transition: opacity 1000ms
 .game-leave-active
   opacity: 0.01
-  transition: opacity 5000ms
+  transition: opacity 1000ms
     
 .action-appear 
   opacity: 0.01
 .action-appear-active
   opacity: 1
   transition: opacity 500ms ease-in
+
+.action-leave 
+  opacity: 1 
+.action-leave-active
+  opacity: 0.01
+  transition: opacity 2s ease-in
 
 .title-appear 
   opacity: 0.01
@@ -267,7 +277,7 @@ p
   opacity: 0.01
 .quote-appear-active
   opacity: 1
-  transition: opacity 1000ms ease-in
+  transition: opacity 1500ms ease-in
 
 .splash-appear 
   opacity: 0.01
@@ -287,9 +297,9 @@ p
   perspective: 1000px
   
 @keyframes splash
-  0%, 20%
+  0%, 10%
     background: #111
-    color: #EEE
+    color: #111
   100%
     background: #FFF
     color: #333

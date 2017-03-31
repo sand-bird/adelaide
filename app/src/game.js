@@ -58,7 +58,7 @@ export const messages = [
     text: "\"...Come on, let's go home. It's getting cold out, and mom is gonna worry.\"",
     id: "star6",
     splash: true,
-    next: {msg: "bed1", pic: "computer", actns: ["bed_wake"]}
+    next: {msg: "bed1", pic: "bedroom", actns: ["bed_wake"]}
   },
   {
     text: "It's Sunday morning. You are in your bedroom. What will you do?",

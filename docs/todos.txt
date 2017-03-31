@@ -3,19 +3,17 @@
 * keep settings in localstate
 * text animations (speed up, slow down, force continue, force type)
 * sprites
-* picture load properly
 * title > game fade animation
 * write transpiler for game.js
-* fix centering
-* entering menu doesn't retype text
+* remove delay on text appear when resuming from menu
 
 
 
 
 
-
-
-
+? fix centering
+X entering menu doesn't retype text
+X picture load properly
 X pagifyActions
 X change pagifyActions to split based on the length of the actions' names
 X switch to webpack i guess

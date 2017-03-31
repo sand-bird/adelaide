@@ -14,7 +14,7 @@ const AppComponent = ({screen, handleKeyDown, handleClick, handleRightClick}) =>
       tabIndex={0} 
       onKeyDown={handleKeyDown} 
       onClick={handleClick} 
-      onContextMenu={handleRightClick}
+      onContextMenu={handleRightClick} 
     >
       { 
         screen == 'SPLASH' ? <SplashScreenComponent/> :

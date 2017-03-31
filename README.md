@@ -2,6 +2,13 @@
 
 Unfinished engine for a text-based adventure game.
 
+![Title Screen](docs/screenshots/0.png?raw=true "Title screen")
+
+![Game Screen](docs/screenshots/1.png?raw=true "Game screen")
+
+![Action Menu](docs/screenshots/2.png?raw=true "An action menu")
+
+
 Built in js with React-Redux and Webpack, runs cross-platform in an application window using Electron.
 
 The game (which doesn't exist, and probably never will) consists of an image representing the player's location, a block of text up to four lines, and a horizontal action menu. Handles both mouse and keyboard (arrow keys, enter, backspace) interaction. 

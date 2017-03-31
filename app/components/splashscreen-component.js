@@ -11,10 +11,10 @@ const SplashScreenComponent = () => {
         <div className="game-title">
           <PixelAlign>ADELAIDE</PixelAlign>
         </div>
-        <Delay wait={3000}>
+        <Delay wait={2000}>
           <ReactCSSTransitionGroup 
             transitionName="quote" 
-            transitionAppearTimeout={1000}
+            transitionAppearTimeout={1500}
             transitionAppear={true}
           >
             <div className="quote">
